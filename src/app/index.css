@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+    --color-logo: #1e22aa;
+}
+
 @layer base {
     h1 {
         @apply text-2xl font-semibold;
@@ -7,5 +11,11 @@
     
     h2 {
         @apply text-xl font-semibold;
+    }
+}
+
+@layer components {
+    .sideBarItemAnimation {
+        @apply lg:whitespace-nowrap lg:max-w-0 lg:opacity-0 transition-all duration-500 ease-in-out group-hover:max-w-[200px] group-hover:opacity-100;
     }
 }
