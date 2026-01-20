@@ -8,7 +8,7 @@ export function SideBarHeader({ isOpen, isMobile, onClose}) {
                 ? <button aria-label="Fechar menu" onClick={onClose}><Menu/></button>
                 : <img src="public/logo2.svg" alt="NexaPulse Logo" className="w-[55px]"/>
             }
-            <h1 className="text-logo sideBarItemAnimation">NexaPulse</h1>
+            <h1 className="text-principal sideBarItemAnimation">NexaPulse</h1>
         </div>
     );
 };
