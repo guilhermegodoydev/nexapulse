@@ -24,7 +24,7 @@ export function SideBar () {
                             <SideBarItem label="Dashboard" icon={<ChartPie className={styleIcons}/>} navigateTo="/dashboard"/>
                         </li>
                         <li>
-                            <SideBarItem label="Empresas" icon={<Building2 className={styleIcons}/>} navigateTo="/empresas"/>
+                            <SideBarItem label="Empresas" icon={<Building2 className={styleIcons}/>} navigateTo="/companies"/>
                         </li>
                     </ul>
                 </div>
