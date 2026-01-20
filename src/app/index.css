@@ -1,9 +1,23 @@
 @import "tailwindcss";
 
-@theme {
-    --color-principal: #1e22aa;
 
+@theme {
+    --color-brand-primary: #1e22aa;
+    --color-bg-main: #ffffff;
+    --color-bg-card: #ffffff;
+    --color-content-base: #6b7280;
+    --color-border: #e5e7eb;
 }
+
+@custom-variant dark (&:where([data-theme=Dark], [data-theme=dark] *));
+
+[data-theme="dark"] {
+    --color-bg-main: #141517;
+    --color-bg-card: #1e1f21;
+    --color-content-base: #dde1e7;
+    --color-border: #374151;
+}
+
 
 @layer base {
     h1 {

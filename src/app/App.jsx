@@ -6,10 +6,10 @@ export default function App() {
   const isMobile = useMediaQuery("(max-width: 767px)");
 
   return (
-    <div className={isMobile ? "" : "ml-[87px]"}>
+    <div>
       <SideBar/>
 
-      <main>
+      <main className={`bg-bg-main min-h-screen ${isMobile ? "" : "pl-[88px]"}`}>
         <Outlet/>
       </main>
     </div>

@@ -5,7 +5,7 @@ import { SideBarItem } from "./SideBarItem";
 import { SideBarHeader } from "./SideBarHeader";
 import { SideBarFooter } from "./SideBarFooter";
 
-const styleIcons = "text-gray-500 scale-100";
+const styleIcons = "text-content-base scale-100";
 
 export function SideBar () {
     const isMobile = useMediaQuery("(max-width: 767px)");
@@ -15,7 +15,7 @@ export function SideBar () {
         <div>
             {isMobile && !isOpen ? <button aria-label="Abrir menu" className="" onClick={() => setOpen(true)}><Menu/></button> : null}
             
-            <aside className={`fixed flex flex-col justify-between left-0 top-0 bottom-0 bg-white shadow-xl rounded-r-xl transition-all duration-300 ease-in-out ${ isMobile && !isOpen ? "-translate-x-full" : "translate-x-0"} z-[2] w-[80%] group lg:w-auto`}>
+            <aside className={`fixed flex flex-col justify-between left-0 top-0 bottom-0 bg-bg-card shadow-xl rounded-r-xl transition-all duration-300 ease-in-out ${ isMobile && !isOpen ? "-translate-x-full" : "translate-x-0"} z-[2] w-[80%] group lg:w-auto`}>
                 <div className="p-4">
                     <SideBarHeader isOpen={isOpen} onClose={() => setOpen(false)} isMobile={isMobile}/>
 

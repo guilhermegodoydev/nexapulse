@@ -8,10 +8,10 @@ export function SideBarFooter() {
 
             <ul className="space-y-4 my-4 px-4">
                 <li>
-                    <SideBarItem label="Sair" icon={<LogOut className="text-gray-500 rotate-180"/>}/>
+                    <SideBarItem label="Sair" icon={<LogOut className="text-content-base rotate-180"/>}/>
                 </li>
                 <li>
-                    <SideBarItem label="Configurações" icon={<Settings className="text-gray-500"/>}/>
+                    <SideBarItem label="Configurações" icon={<Settings className="text-content-base"/>}/>
                 </li>
             </ul>
         </div>
