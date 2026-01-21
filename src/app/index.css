@@ -6,7 +6,8 @@
     --color-bg-main: #ffffff;
     --color-bg-card: #ffffff;
     --color-content-base: #6b7280;
-    --color-border: #e5e7eb;
+    --color-hover-text: #111827;
+    --color-border: #f2f2f2;
 }
 
 @custom-variant dark (&:where([data-theme=Dark], [data-theme=dark] *));
@@ -15,7 +16,8 @@
     --color-bg-main: #141517;
     --color-bg-card: #1e1f21;
     --color-content-base: #dde1e7;
-    --color-border: #374151;
+    --color-border: #2c2f36;
+    --color-hover-text: #f3f4f6;
 }
 
 
