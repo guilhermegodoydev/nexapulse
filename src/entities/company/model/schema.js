@@ -28,6 +28,6 @@ export const companySummarySchema = companySchema.pick({
     annual_revenue: true,
 }).extend({
     company_contact: z.array(
-        companyContactSchema.pick({ name: true })
+        companyContactSchema.pick({ name: true, last_contact: true })
     ).nullable(),
 });
