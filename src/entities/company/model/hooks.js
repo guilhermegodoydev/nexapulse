@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteCompany, getCompaniesSummary } from '../api/api';
 import { companySummarySchema } from '../model/schema';
 import { z } from 'zod';
+import { toast } from 'sonner';
 
 export function useCompaniesSummary() {
     return useQuery({
@@ -25,7 +26,7 @@ export function useDeleteCompany() {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: deleteCompany,
+        mutationFn: async (companyId) => { await deleteCompany(companyId); },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['companiesSummary']});
         },
