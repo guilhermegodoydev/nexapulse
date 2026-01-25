@@ -1,7 +1,9 @@
 import { X } from "lucide-react";
 import { createPortal } from "react-dom";
 
-export function ModalConfirm({ title, description, onConfirm, onCancel }) {
+export function ModalConfirm({ isOpen, title, description, onConfirm, onCancel }) {
+    if (!isOpen) return null;
+
     const portalRoot = document.getElementById('modal-root');
 
     if (!portalRoot) {
