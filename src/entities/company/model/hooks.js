@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query';
-import { getCompaniesSummary } from '../api/api';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteCompany, getCompaniesSummary } from '../api/api';
 import { companySummarySchema } from '../model/schema';
 import { z } from 'zod';
 
@@ -18,5 +18,16 @@ export function useCompaniesSummary() {
             lastContact: company.company_contact?.[0]?.last_contact || 'Não informado',
             mainContactName: company.company_contact?.[0]?.name || 'Não informado',
         })),
+    });
+}
+
+export function useDeleteCompany() {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: deleteCompany,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['companiesSummary']});
+        },
     });
 }

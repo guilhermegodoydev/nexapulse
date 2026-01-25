@@ -9,3 +9,12 @@ export async function getCompaniesSummary() {
     if (error) throw new Error(error.message);
     return data;
 };
+
+export async function deleteCompany(companyId) {
+    const { error } = await supabase
+    .from('company')    
+    .delete()
+    .eq('id', companyId);
+
+    if (error) throw new Error(error.message);
+}
