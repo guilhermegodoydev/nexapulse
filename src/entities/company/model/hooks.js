@@ -1,24 +1,23 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteCompany, getCompaniesSummary } from '../api/api';
 import { companySummarySchema } from '../model/schema';
+import { mapToCompanySummary  } from '../lib/mapper';
 import { z } from 'zod';
-import { toast } from 'sonner';
 
-export function useCompaniesSummary() {
+export function useCompaniesSummary(page = 0, pageSize = 25) {
     return useQuery({
-        queryKey: ['companiesSummary'],
+        queryKey: ['companiesSummary', { page, pageSize }],
         queryFn: async () => {
-            const companies = await getCompaniesSummary();
-            return z.array(companySummarySchema).parse(companies);
+            const { data, total } = await getCompaniesSummary(page, pageSize);
+            const validate = z.array(companySummarySchema).parse(data);
+            return { companies: validate, total };
         },
-        select: (companies) => companies.map(company => ({
-            id: company.id,
-            tradeName: company.trade_name,
-            status: company.status,
-            revenue: company.annual_revenue || 0,
-            lastContact: company.company_contact?.[0]?.last_contact || 'Não informado',
-            mainContactName: company.company_contact?.[0]?.name || 'Não informado',
-        })),
+        staleTime: 5 * 60 * 1000,
+        placeholderData: (prev) => prev,
+        select: (response) => ({
+            total: response.total,
+            rows: response.companies.map(company => mapToCompanySummary (company))
+        }),
     });
 }
 
