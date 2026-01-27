@@ -1,7 +1,7 @@
-export function Button({ label = '', renderItem = null, onClick, props, isLoading }) {
+export function Button({ label = '', renderItem = null, onClick, props, isLoading, className }) {
     return (
         <button 
-            className={isLoading ? 'cursor-not-allowed pointer-events-none' : 'cursor-pointer'} 
+            className={isLoading ? 'cursor-not-allowed pointer-events-none' : 'cursor-pointer' + ' ' + className} 
             onClick={onClick}
             disabled={isLoading}
             {...props}
