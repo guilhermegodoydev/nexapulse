@@ -3,6 +3,7 @@ import { Table } from "@shared/ui/table/Table";
 import { useCompaniesSummary } from "@entities/company/model/hooks";
 import { DeleteCompanyButton } from "@features/companyDelete/ui/DeleteCompanyButton";
 import { useSearchParams } from "react-router-dom";
+import { Badge } from "@shared/ui/badge/Badge"
 
 export function CompanyList() {
     const [ searchParams, setSearchParams ] = useSearchParams();
@@ -24,11 +25,27 @@ export function CompanyList() {
             </div>
         );
     };
+
+    const addBadges = ({ status }) => {
+        return (
+            <Badge label={status.label} variant={status.variant}/>
+        );
+    };
     
+    const addBadgeLifeCycle = ({ tradeName, lifecycleStage }) => {
+        return (
+            <div className="flex items-center gap-2">
+                <p className="text-gray-700 font-semibold">{tradeName}</p>
+                <Badge label={lifecycleStage} variant="neutral"/>
+            </div>
+        );
+    };
+
     const columns = [
-        {label: 'Nome', key: 'tradeName'},
-        {label: 'Status', key: 'status'},
+        {label: 'Empresa', key: '', render: addBadgeLifeCycle},
+        {label: 'Status', key: '', render: addBadges},
         {label: 'Contato', key: 'mainContactName'},
+        {label: 'Setor', key: 'industry'},
         {label: 'Receita Anual', key: 'revenue'},
         {label: 'Último Contato', key: 'lastContact', className: 'text-center'},
         {label: 'Ações', key: '', render: renderActions, className: 'text-center w-20'},
@@ -54,6 +71,12 @@ export function CompanyList() {
                 </div>
                 <hr />
             </header>
+            <section>
+                <div>
+                    <h3>Quantidade de empresas</h3>
+
+                </div>
+            </section>
             <section className="p-10">
                 <Table 
                     columns={columns} 

@@ -5,6 +5,11 @@ export function Table({ columns, data, totalPages = null, currentPage = null, on
 
     const styleButton="bg-bg-card border border-brand-primary text-content-base hover:bg-hover-bg hover:text-hover-text disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2 rounded-md mt-4";
 
+    const getValue = (obj, path) => {
+        if (!path) return '';
+        return path.split('.').reduce((acc, key) => (acc == null ? undefined : acc[key]), obj);
+    };
+
     return (
         <>
             <table className="rounded-md border-collapse shadow-2xl w-full [&_th]:p-1 [&_td]:py-2 [&_td]:px-10 [&_tr]:text-content-base">
@@ -32,7 +37,7 @@ export function Table({ columns, data, totalPages = null, currentPage = null, on
 
                                 return (
                                     <td className={style + ' ' + column.className} key={column.label}>
-                                        {column.render ? column.render(row) : row[column.key]}
+                                        {column.render ? column.render(row) : (column.key ? getValue(row, column.key) : '')}
                                     </td>
                                 );
                             })}
