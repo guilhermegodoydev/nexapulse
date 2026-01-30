@@ -1,38 +1,88 @@
 @import "tailwindcss";
 
-
 @theme {
-    --color-brand-primary: #1e22aa;
-    --color-bg-main: #ffffff;
-    --color-bg-card: #ffffff;
-    --color-content-base: #6b7280;
-    --color-hover-text: #111827;
-    --color-border: #f2f2f2;
+  --color-brand-primary: #1e22aa;
+  --color-bg-main: #ffffff;
+  --color-bg-card: #ffffff;
+  --color-content-base: #6b7280;
+  --color-hover-text: #111827;
+  --color-border: #f2f2f2;
+}
+
+:root {
+  --badge-success-bg: #ecfdf5;
+  --badge-success-text: #065f46;
+  --badge-success-border: #d1fae5;
+
+  --badge-danger-bg: #fee2e2;
+  --badge-danger-text: #991b1b;
+  --badge-danger-border: #fca5a5;
+
+  --badge-neutral-bg: #f3f4f6;
+  --badge-neutral-text: #6b7280;
+  --badge-neutral-border: #e5e7eb;
 }
 
 @custom-variant dark (&:where([data-theme=Dark], [data-theme=dark] *));
 
 [data-theme="dark"] {
-    --color-bg-main: #141517;
-    --color-bg-card: #1e1f21;
-    --color-content-base: #dde1e7;
-    --color-border: #2c2f36;
-    --color-hover-text: #f3f4f6;
+  --color-bg-main: #141517;
+  --color-bg-card: #1e1f21;
+  --color-content-base: #dde1e7;
+  --color-border: #2c2f36;
+  --color-hover-text: #f3f4f6;
+
+  /* Badge (dark) */
+  --badge-success-bg: #052e1b;
+  --badge-success-text: #d1fae5;
+  --badge-success-border: #064e3b;
+
+  --badge-danger-bg: #2b0505;
+  --badge-danger-text: #ffdada;
+  --badge-danger-border: #4c0515;
+
+  --badge-neutral-bg: #111827;
+  --badge-neutral-text: #d1d5db;
+  --badge-neutral-border: #374151;
 }
 
-
 @layer base {
-    h1 {
-        @apply text-2xl font-semibold;
-    }
-    
-    h2 {
-        @apply text-xl font-semibold;
-    }
+  h1 {
+    @apply text-2xl font-semibold;
+  }
+
+  h2 {
+    @apply text-xl font-semibold;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2 py-0.5 rounded-md text-sm border;
+    background-color: var(--badge-bg, transparent);
+    color: var(--badge-text);
+    border-color: var(--badge-border);
+  }
+
+  .badge-success {
+    --badge-bg: var(--badge-success-bg);
+    --badge-text: var(--badge-success-text);
+    --badge-border: var(--badge-success-border);
+  }
+
+  .badge-danger {
+    --badge-bg: var(--badge-danger-bg);
+    --badge-text: var(--badge-danger-text);
+    --badge-border: var(--badge-danger-border);
+  }
+
+  .badge-neutral {
+    --badge-bg: var(--badge-neutral-bg);
+    --badge-text: var(--badge-neutral-text);
+    --badge-border: var(--badge-neutral-border);
+  }
 }
 
 @layer components {
-    .sideBarItemAnimation {
-        @apply lg:whitespace-nowrap lg:max-w-0 lg:opacity-0 transition-all duration-500 ease-in-out group-hover:max-w-[200px] group-hover:opacity-100;
-    }
+  .sideBarItemAnimation {
+    @apply lg:whitespace-nowrap lg:max-w-0 lg:opacity-0 transition-all duration-500 ease-in-out group-hover:max-w-[200px] group-hover:opacity-100;
+  }
 }
