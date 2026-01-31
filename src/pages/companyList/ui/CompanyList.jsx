@@ -4,6 +4,7 @@ import { useCompaniesSummary } from "@entities/company/model/hooks";
 import { DeleteCompanyButton } from "@features/companyDelete/ui/DeleteCompanyButton";
 import { useSearchParams } from "react-router-dom";
 import { Badge } from "@shared/ui/badge/Badge"
+import { TableSkeleton } from "../../../shared/ui/table/TableSkeleton";
 
 export function CompanyList() {
     const [ searchParams, setSearchParams ] = useSearchParams();
@@ -13,6 +14,7 @@ export function CompanyList() {
 
     const totalCount = data?.total || 0;
     const totalPages = Math.ceil(totalCount / pageSize);
+    console.log(totalPages);
 
     const handlePageChange = (newPage) => {
         setSearchParams({ page: String(newPage)});
@@ -35,7 +37,7 @@ export function CompanyList() {
     const addBadgeLifeCycle = ({ tradeName, lifecycleStage }) => {
         return (
             <div className="flex items-center gap-2">
-                <p className="text-gray-700 font-semibold">{tradeName}</p>
+                <p className="font-semibold">{tradeName}</p>
                 <Badge label={lifecycleStage} variant="neutral"/>
             </div>
         );
@@ -50,10 +52,6 @@ export function CompanyList() {
         {label: 'Último Contato', key: 'lastContact', className: 'text-center'},
         {label: 'Ações', key: '', render: renderActions, className: 'text-center w-20'},
     ];
-
-    if (isLoading) {
-        return <div>Carregando...</div>;
-    }
 
     if (isError) {
         return <div>Erro ao carregar a lista de empresas.</div>;
@@ -78,13 +76,17 @@ export function CompanyList() {
                 </div>
             </section>
             <section className="p-10">
-                <Table 
-                    columns={columns} 
-                    data={data?.rows}  
-                    currentPage={page + 1}
-                    totalPages={totalPages}
-                    onPageChange={handlePageChange}
-                />
+                {isLoading ? 
+                    <TableSkeleton rows={pageSize} columns={columns.length}/>
+                    :
+                    <Table 
+                        columns={columns} 
+                        data={data?.rows}  
+                        currentPage={page + 1}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                    />
+                }
             </section>
         </>
     );
