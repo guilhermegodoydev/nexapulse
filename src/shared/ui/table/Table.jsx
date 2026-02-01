@@ -4,8 +4,7 @@ import { Button } from "../Button";
 const TABLE_STYLE = "rounded-md border-collapse w-full shadow-2xl [&_th]:p-1 [&_td]:py-2 [&_td]:px-10";
 const THEAD_STYLE = "bg-bg-card border-b-2 border-border";
 
-export function Table({ columns, data, totalPages = null, currentPage = null, onPageChange = () => {} }) {
-
+export function Table({ columns, data, totalPages = null, currentPage = null, onPageChange = () => {}, emptyMessage }) {
     const styleButton="bg-bg-card border border-brand-primary text-content-base hover:bg-hover-bg hover:text-hover-text disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2 rounded-md mt-4";
 
     const getValue = (obj, path) => {
@@ -24,32 +23,32 @@ export function Table({ columns, data, totalPages = null, currentPage = null, on
                     </tr>
                 </thead>
                 <tbody className="bg-bg-card [&_td]:text-sm [&_tr:hover]:text-hover-text [&_tr:nth-child(odd)]:bg-card [&_tr:hover]:bg-blue-500/10 [&_td]:border-t [&_td]:border-border">
-                    {
-                    data && data.length === 0 ? (
+                    {!data || data.length === 0 ? (
                         <tr>
-                            <td className="text-center p-5 rounded-b-md" colSpan={columns.length}>Nenhum dado disponível.</td>
+                            <td className="text-center p-5 rounded-b-md" colSpan={columns.length}>{emptyMessage}</td>
                         </tr>
-                    ) :
-                    (data.map((row, rowIndex) => (
-                        <tr key={rowIndex}>
-                            {columns.map((column, index) => {
-                                const isLastRow = rowIndex === data.length - 1;
-                                const isLastColumn = index === columns.length - 1;
+                        ) 
+                        :
+                        (data.map((row, rowIndex) => (
+                            <tr key={rowIndex}>
+                                {columns.map((column, index) => {
+                                    const isLastRow = rowIndex === data.length - 1;
+                                    const isLastColumn = index === columns.length - 1;
 
-                                const style = isLastRow && index === 0 ? "rounded-bl-md" : isLastRow && isLastColumn ? "rounded-br-md" : "";
+                                    const style = isLastRow && index === 0 ? "rounded-bl-md" : isLastRow && isLastColumn ? "rounded-br-md" : "";
 
-                                return (
-                                    <td className={style + ' ' + column.className} key={column.label}>
-                                        {column.render ? column.render(row) : (column.key ? getValue(row, column.key) : '')}
-                                    </td>
-                                );
-                            })}
-                        </tr>
+                                    return (
+                                        <td className={style + ' ' + column.className} key={column.label}>
+                                            {column.render ? column.render(row) : (column.key ? getValue(row, column.key) : '')}
+                                        </td>
+                                    );
+                                })}
+                            </tr>
                     )))}
 
                 </tbody>
             </table>
-            {totalPages &&
+            {totalPages ?
                 <div className="flex justify-between">
                     <Button className={styleButton + (currentPage > 1 ? "" : " invisible")} onClick={() => onPageChange(currentPage - 2)} renderItem={() => 
                         <div className="flex items-center gap-3">
@@ -65,7 +64,7 @@ export function Table({ columns, data, totalPages = null, currentPage = null, on
                         </div>
                     }/>
                 </div>
-            }
+            : null}
         </>
     );
 };
