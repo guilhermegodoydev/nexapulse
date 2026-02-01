@@ -125,7 +125,7 @@ export function CompanyList() {
                 <section>
                     <Card className="flex gap-3">
                         <Button renderItem={() => <Search className="text-content-base"/>} isLoading={isSearching}/>
-                        <input type="text" placeholder="Nome da Empresa" className="w-full px-2" value={search} onChange={(e) => setSearch(e.target.value)}/>
+                        <input type="text" placeholder="Nome da Empresa" className="w-full px-2 dark:text-white" value={search} onChange={(e) => setSearch(e.target.value)}/>
                     </Card>
                     {isLoading ? 
                         <TableSkeleton rows={pageSize} columns={columns.length}/>
