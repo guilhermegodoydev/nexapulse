@@ -4,11 +4,11 @@ import { companySummarySchema } from '../model/schema';
 import { companiesStatSchema } from '../model/statSchema';
 import { z } from 'zod';
 
-export function useCompaniesSummary(page = 0, pageSize = 25) {
+export function useCompaniesSummary(page = 0, pageSize = 25, search) {
     return useQuery({
-        queryKey: ['companiesSummary', { page, pageSize }],
+        queryKey: ['companiesSummary', { page, pageSize, search }],
         queryFn: async () => {
-            const { data, total } = await getCompaniesSummary(page, pageSize);
+            const { data, total } = await getCompaniesSummary(page, pageSize, search);
             const validate = z.array(companySummarySchema).parse(data);
             return { rows: validate, total };
         },

@@ -2,24 +2,35 @@ import { Button } from "@shared/ui/Button";
 import { Table, TableSkeleton } from "@shared/ui/table/Table";
 import { StatCard } from "@shared/ui/card/StatCard";
 import { Badge } from "@shared/ui/badge/Badge";
+import { Card, CardSkeleton } from "@shared/ui/card/Card"
+import { useDebounce } from "@shared/lib/hooks/useDebounce";
 
 import { useCompaniesSummary, useCompaniesStat } from "@entities/company/model/hooks";
 
 import { DeleteCompanyButton } from "@features/companyDelete/ui/DeleteCompanyButton";
 
 import { useSearchParams } from "react-router-dom";
-import { CardSkeleton } from "@shared/ui/card/Card";
+import { Search } from "lucide-react";
+import { useEffect, useState } from "react";
 
 
 export function CompanyList() {
+    const [ search, setSearch ] = useState("");
+    const debouncedSearch = useDebounce(search, 500);
     const [ searchParams, setSearchParams ] = useSearchParams();
     const page = Number(searchParams.get('page') || 0);
     const pageSize = 25;
-    const { data, isError, isLoading } = useCompaniesSummary(page, pageSize);
+    const { data, isError, isLoading, isFetching } = useCompaniesSummary(page, pageSize, debouncedSearch);
     const { data: companiesState, isError: isStatError, isLoading: isStatLoading } = useCompaniesStat();
 
     const totalCount = data?.total || 0;
-    const totalPages = Math.ceil(totalCount / pageSize);
+    const totalPages = Math.ceil(totalCount / pageSize) || 1;
+
+    useEffect(() => {
+        if (page !== 0) {
+            setSearchParams({ page: String(0)});
+        }
+    }, [debouncedSearch]);
 
     const handlePageChange = (newPage) => {
         setSearchParams({ page: String(newPage)});
@@ -70,6 +81,8 @@ export function CompanyList() {
         return <div>Erro ao carregar a lista de empresas.</div>;
     }
 
+    const isSearching = isFetching && search !== debouncedSearch;
+
     return (
         <>
             <header>
@@ -110,12 +123,17 @@ export function CompanyList() {
                     }
                 </section>
                 <section>
+                    <Card className="flex gap-3">
+                        <Button renderItem={() => <Search className="text-content-base"/>} isLoading={isSearching}/>
+                        <input type="text" placeholder="Nome da Empresa" className="w-full px-2" value={search} onChange={(e) => setSearch(e.target.value)}/>
+                    </Card>
                     {isLoading ? 
                         <TableSkeleton rows={pageSize} columns={columns.length}/>
                         :
                         <Table 
                             columns={columns} 
                             data={data?.rows}  
+                            emptyMessage={"Nenhuma Empresa encontrada"}
                             currentPage={page + 1}
                             totalPages={totalPages}
                             onPageChange={handlePageChange}
