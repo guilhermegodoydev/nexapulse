@@ -1,11 +1,11 @@
 import { createContext, useContext } from "react";
-import { useModal } from "@shared/ui/modal/useModal";
+import { useModalConfirm } from "@shared/ui/modal/useModal";
 import { ModalConfirm } from "@shared/ui/modal/ModalConfirm";
 
 const ModalContext = createContext();
 
 export function ModalProvider({ children }) {
-    const { isOpen, openModal, closeModal, modalConfig } = useModal();
+    const { isOpen, openModal, closeModal, modalConfig } = useModalConfirm();
 
     return (
         <ModalContext.Provider value={{ openModal, closeModal }}>
@@ -25,6 +25,6 @@ export function ModalProvider({ children }) {
     );
 }
 
-export function useModalConfirm() {
+export function useConfirmModal() {
     return useContext(ModalContext);
 }

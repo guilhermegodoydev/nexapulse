@@ -1,11 +1,11 @@
 import { Trash2 } from "lucide-react";
 import { useDeleteCompany } from "@entities/company/model/hooks";
-import { useModalConfirm } from "@app/providers/modal";
+import { useConfirmModal } from "@app/providers/modal";
 import { Button } from "@shared/ui/Button";
 import { toast } from "sonner";
 
 export function DeleteCompanyButton ({ companyId, companyName }) {
-    const { openModal, closeModal } = useModalConfirm();
+    const { openModal, closeModal } = useConfirmModal();
     const { mutate, isPending } = useDeleteCompany();
 
     const handleDelete = () => {

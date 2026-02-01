@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-export function useModal() {
+export function useModalConfirm() {
     const [ isOpen, setIsOpen ] = useState(false);
     const [ modalConfig, setModalConfig ] = useState({
         title: '',
