@@ -17,5 +17,5 @@ export const companiesStatSchema = z.object({
         percentageChange: stat.companies_at_risk.percentage_change,
         isPositive: stat.companies_at_risk.is_positive,
     },
-    openOpportunitiesValue: stat.open_opportunities_value,
+    openOpportunitiesValue: new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', notation: 'compact' }).format(stat.open_opportunities_value),
 }));
