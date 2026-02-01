@@ -1,5 +1,5 @@
 import { Building2, Menu, ChartPie } from "lucide-react";
-import { useMediaQuery } from "@shared/lib/hooks/useMediaQuery"
+import { useMediaQuery } from "@shared/lib/useMediaQuery";
 import { useState } from "react";
 import { SideBarItem } from "./SideBarItem";
 import { SideBarHeader } from "./SideBarHeader";

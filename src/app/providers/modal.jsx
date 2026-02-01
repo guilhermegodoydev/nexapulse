@@ -1,6 +1,6 @@
 import { createContext, useContext } from "react";
-import { useModal } from "@shared/lib/modal/useModal";
-import { ModalConfirm } from "@shared/ui/ModalConfirm";
+import { useModal } from "@shared/ui/modal/useModal";
+import { ModalConfirm } from "@shared/ui/modal/ModalConfirm";
 
 const ModalContext = createContext();
 

@@ -3,7 +3,7 @@ import { Table, TableSkeleton } from "@shared/ui/table/Table";
 import { StatCard } from "@shared/ui/card/StatCard";
 import { Badge } from "@shared/ui/badge/Badge";
 import { Card, CardSkeleton } from "@shared/ui/card/Card"
-import { useDebounce } from "@shared/lib/hooks/useDebounce";
+import { useDebounce } from "@shared/lib/useDebounce";
 
 import { useCompaniesSummary, useCompaniesStat } from "@entities/company/model/hooks";
 
@@ -90,7 +90,7 @@ export function CompanyList() {
                     <h1>Empresas</h1>
 
                     <div>
-                        <Button label="Adicionar" />
+                        <Button label="Adicionar" className="bg-brand-primary text-white m-2 p-1 px-2 rounded-md"/>
                     </div>
                 </div>
                 <hr />
