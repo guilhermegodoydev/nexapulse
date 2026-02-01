@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { SideBar } from "@widgets/sidebar/ui/SideBar";
-import { useMediaQuery } from "@shared/lib/hooks/useMediaQuery";
+import { useMediaQuery } from "@shared/lib/useMediaQuery";
 
 export default function App() {
   const isMobile = useMediaQuery("(max-width: 767px)");
@@ -9,9 +9,9 @@ export default function App() {
     <div>
       <SideBar/>
 
-      <main className={`bg-bg-main min-h-screen ${isMobile ? "" : "pl-[88px]"}`}>
+      <div className={`bg-bg-main min-h-screen ${isMobile ? "" : "pl-[88px]"}`}>
         <Outlet/>
-      </main>
+      </div>
     </div>
   );
 }
