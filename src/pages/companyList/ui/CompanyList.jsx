@@ -1,20 +1,25 @@
 import { Button } from "@shared/ui/Button";
-import { Table } from "@shared/ui/table/Table";
-import { useCompaniesSummary } from "@entities/company/model/hooks";
+import { Table, TableSkeleton } from "@shared/ui/table/Table";
+import { StatCard } from "@shared/ui/card/StatCard";
+import { Badge } from "@shared/ui/badge/Badge";
+
+import { useCompaniesSummary, useCompaniesStat } from "@entities/company/model/hooks";
+
 import { DeleteCompanyButton } from "@features/companyDelete/ui/DeleteCompanyButton";
+
 import { useSearchParams } from "react-router-dom";
-import { Badge } from "@shared/ui/badge/Badge"
-import { TableSkeleton } from "../../../shared/ui/table/TableSkeleton";
+import { CardSkeleton } from "@shared/ui/card/Card";
+
 
 export function CompanyList() {
     const [ searchParams, setSearchParams ] = useSearchParams();
     const page = Number(searchParams.get('page') || 0);
     const pageSize = 25;
     const { data, isError, isLoading } = useCompaniesSummary(page, pageSize);
+    const { data: companiesState, isError: isStatError, isLoading: isStatLoading } = useCompaniesStat();
 
     const totalCount = data?.total || 0;
     const totalPages = Math.ceil(totalCount / pageSize);
-    console.log(totalPages);
 
     const handlePageChange = (newPage) => {
         setSearchParams({ page: String(newPage)});
@@ -43,6 +48,14 @@ export function CompanyList() {
         );
     };
 
+    const generateComparativeMessage = (value, percentage) => {
+        if (value === 0 || !value) {
+            return "Nenhuma comparação disponínel";
+        }
+
+        return `${percentage}% vs Mês Anterior`;
+    };
+
     const columns = [
         {label: 'Empresa', key: '', render: addBadgeLifeCycle},
         {label: 'Status', key: '', render: addBadges},
@@ -53,7 +66,7 @@ export function CompanyList() {
         {label: 'Ações', key: '', render: renderActions, className: 'text-center w-20'},
     ];
 
-    if (isError) {
+    if (isError || isStatError) {
         return <div>Erro ao carregar a lista de empresas.</div>;
     }
 
@@ -69,25 +82,47 @@ export function CompanyList() {
                 </div>
                 <hr />
             </header>
-            <section>
-                <div>
-                    <h3>Quantidade de empresas</h3>
-
-                </div>
-            </section>
-            <section className="p-10">
-                {isLoading ? 
-                    <TableSkeleton rows={pageSize} columns={columns.length}/>
-                    :
-                    <Table 
-                        columns={columns} 
-                        data={data?.rows}  
-                        currentPage={page + 1}
-                        totalPages={totalPages}
-                        onPageChange={handlePageChange}
-                    />
-                }
-            </section>
+            <main>
+                <section className="grid grid-cols-3 gap-10 min-h-35">
+                    {isStatLoading ? 
+                        <>
+                            <CardSkeleton/>
+                            <CardSkeleton/>
+                            <CardSkeleton/>
+                        </>
+                        :
+                        <>
+                            <StatCard 
+                                title="Empresas Ativas" 
+                                value={companiesState.activeCompanies} 
+                                intent="neutral"
+                            />
+                            <StatCard 
+                                title="Empresas sem Contato(> 30 dias)" 
+                                value={companiesState.companiesAtRisk.currentValue} 
+                                comparative={companiesState.companiesAtRisk.isPositve === true ? "-" : "+" + generateComparativeMessage(companiesState.companiesAtRisk.currentValue, companiesState.companiesAtRisk.percentageChange)}
+                                trend={companiesState.companiesAtRisk.isPositve === true ? "down" : "up"}
+                                intent={companiesState.companiesAtRisk.isPositve === true ? "positive" : "negative"}
+                            />
+                            <StatCard title="Pipeline Total" value={companiesState.openOpportunitiesValue}/>
+                        </>
+                        
+                    }
+                </section>
+                <section>
+                    {isLoading ? 
+                        <TableSkeleton rows={pageSize} columns={columns.length}/>
+                        :
+                        <Table 
+                            columns={columns} 
+                            data={data?.rows}  
+                            currentPage={page + 1}
+                            totalPages={totalPages}
+                            onPageChange={handlePageChange}
+                        />
+                    }
+                </section>
+            </main>
         </>
     );
 };
