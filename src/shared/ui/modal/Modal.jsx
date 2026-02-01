@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
 import { createPortal } from "react-dom";
 
-export function Modal({ isOpen, title, onCancel, children}) {
+export function Modal({ isOpen, title, onClose, children}) {
     if (!isOpen) return null;
 
     const portalRoot = document.getElementById('modal-root');
@@ -16,7 +16,7 @@ export function Modal({ isOpen, title, onCancel, children}) {
             <div className="bg-white p-6 rounded-lg shadow-lg">
                 <div className="flex items-center justify-between mb-4">
                     <h2 className="text-xl font-bold">{title}</h2>
-                    <button aria-label="Fechar Modal" className="cursor-pointer" onClick={onCancel}>
+                    <button aria-label="Fechar Modal" className="cursor-pointer" onClick={onClose}>
                         <X/>
                     </button>
                 </div>
