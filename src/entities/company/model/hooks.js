@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteCompany, getCompaniesSummary } from '../api/api';
 import { companySummarySchema } from '../model/schema';
-import { mapToCompanySummary  } from '../lib/mapper';
 import { z } from 'zod';
 
 export function useCompaniesSummary(page = 0, pageSize = 25) {
@@ -10,14 +9,10 @@ export function useCompaniesSummary(page = 0, pageSize = 25) {
         queryFn: async () => {
             const { data, total } = await getCompaniesSummary(page, pageSize);
             const validate = z.array(companySummarySchema).parse(data);
-            return { companies: validate, total };
+            return { rows: validate, total };
         },
         staleTime: 5 * 60 * 1000,
         placeholderData: (prev) => prev,
-        select: (response) => ({
-            total: response.total,
-            rows: response.companies.map(company => mapToCompanySummary (company))
-        }),
     });
 }
 
