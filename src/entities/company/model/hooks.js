@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteCompany, getCompaniesSummary } from '../api/api';
+import { deleteCompany, getCompaniesSummary, getCompaniesStat } from '../api/api';
 import { companySummarySchema } from '../model/schema';
+import { companiesStatSchema } from '../model/statSchema';
 import { z } from 'zod';
 
 export function useCompaniesSummary(page = 0, pageSize = 25) {
@@ -24,5 +25,16 @@ export function useDeleteCompany() {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['companiesSummary']});
         },
+    });
+}
+
+export function useCompaniesStat() {
+    return useQuery({
+        queryKey: ['companiesStat'],
+        queryFn: async () => {
+            const { data } = await getCompaniesStat();
+            return companiesStatSchema.parse(data);
+        },
+        staleTime: 5 * 60 * 1000
     });
 }

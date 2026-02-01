@@ -23,3 +23,10 @@ export async function deleteCompany(companyId) {
 
     if (error) throw new Error(error.message);
 }
+
+export async function getCompaniesStat() {
+    const { data, error } = await supabase.rpc('get_company_stats')
+
+    if (error) throw new Error(error.message);
+    return { data }
+}
