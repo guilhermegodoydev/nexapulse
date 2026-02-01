@@ -1,7 +1,7 @@
 import { Card } from "./Card";
 import { CircleArrowDown, CircleArrowUp } from "lucide-react";
 
-export function StatCard({ title, value, comparative, trend, intent = "neutral"}) {
+export function StatCard({ title, value, comparative = "Nenhuma Comparação disponível", trend, intent = "neutral"}) {
     const styles = {
         positive: "text-green-600",
         negative: "text-red-600",
