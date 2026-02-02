@@ -28,11 +28,23 @@ export async function deleteCompany(companyId) {
     .eq('id', companyId);
 
     if (error) throw new Error(error.message);
+    return true;
 }
 
 export async function getCompaniesStat() {
     const { data, error } = await supabase.rpc('get_company_stats')
 
     if (error) throw new Error(error.message);
-    return { data }
+    return data;
+}
+
+export async function createCompany(company) {
+    const { data, error } = await supabase
+        .from('company')
+        .insert([company])
+        .select()
+        .single();
+
+    if (error) throw new Error(error.message);
+    return data;
 }

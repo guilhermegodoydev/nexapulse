@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteCompany, getCompaniesSummary, getCompaniesStat } from '../api/api';
+import { deleteCompany, getCompaniesSummary, getCompaniesStat, createCompany } from '../api/api';
 import { companySummarySchema } from '../model/schema';
 import { companiesStatSchema } from '../model/statSchema';
 import { z } from 'zod';
@@ -32,9 +32,23 @@ export function useCompaniesStat() {
     return useQuery({
         queryKey: ['companiesStat'],
         queryFn: async () => {
-            const { data } = await getCompaniesStat();
+            const data = await getCompaniesStat();
             return companiesStatSchema.parse(data);
         },
         staleTime: 5 * 60 * 1000
+    });
+}
+
+export function useCreateCompany() {
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: async (company) => { 
+            const empresa = await createCompany(company);
+            console.log(empresa);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['companiesSummary']});
+        },
     });
 }
