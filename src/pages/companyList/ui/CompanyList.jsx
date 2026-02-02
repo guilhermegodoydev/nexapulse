@@ -1,4 +1,3 @@
-import { Button } from "@shared/ui/Button";
 import { Table, TableSkeleton } from "@shared/ui/table/Table";
 import { StatCard } from "@shared/ui/card/StatCard";
 import { Badge } from "@shared/ui/badge/Badge";
@@ -14,14 +13,13 @@ import { useSearchParams } from "react-router-dom";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
-
 export function CompanyList() {
     const [ search, setSearch ] = useState("");
     const debouncedSearch = useDebounce(search, 500);
     const [ searchParams, setSearchParams ] = useSearchParams();
     const page = Number(searchParams.get('page') || 0);
     const pageSize = 25;
-    const { data, isError, isLoading, isFetching } = useCompaniesSummary(page, pageSize, debouncedSearch);
+    const { data, isError, isLoading } = useCompaniesSummary(page, pageSize, debouncedSearch);
     const { data: companiesState, isError: isStatError, isLoading: isStatLoading } = useCompaniesStat();
 
     const totalCount = data?.total || 0;
@@ -82,8 +80,6 @@ export function CompanyList() {
         return <div>Erro ao carregar a lista de empresas.</div>;
     }
 
-    const isSearching = isFetching && search !== debouncedSearch;
-
     return (
         <>
             <header>
@@ -119,8 +115,7 @@ export function CompanyList() {
                                 intent={companiesState.companiesAtRisk.isPositve === true ? "positive" : "negative"}
                             />
                             <StatCard title="Pipeline Total" value={companiesState.openOpportunitiesValue}/>
-                        </>
-                        
+                        </>   
                     }
                 </section>
                 <section>
