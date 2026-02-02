@@ -84,4 +84,8 @@
   .sideBarItemAnimation {
     @apply lg:whitespace-nowrap lg:max-w-0 lg:opacity-0 transition-all duration-500 ease-in-out group-hover:max-w-[200px] group-hover:opacity-100;
   }
+
+  .buttonStyle {
+    @apply bg-brand-primary px-2 text-white rounded-md;
+  }
 }
