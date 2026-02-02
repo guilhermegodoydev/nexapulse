@@ -9,15 +9,15 @@ const STATUS_VARIANTS = {
 
 export const companySchema = z.object({
     id: z.uuid(),
-    trade_name: z.string().min(2).max(100),
-    legal_name: z.string().min(2).max(150).nullable(),
-    cnpj: z.string().min(14).max(18).nullable(),
-    industry: z.string().min(2).max(50),
-    employees: z.int().min(0).nullable(),
+    trade_name: z.string().min(1, 'O nome é obrigatório').min(2, 'O nome é muito curto').max(100, 'O nome é muito longo'),
+    legal_name: z.preprocess((v) => v === "" ? null : v, z.string().min(2, 'O nome legal é muito curto').max(150).nullable()),
+    cnpj: z.preprocess((v) => v === "" ? null : v, z.string().min(14, 'CNPJ Incompleto').max(18, 'CNPJ Inválido').nullable()),
+    industry: z.string().min(1, 'O setor é obrigatório').min(2, 'O setor é muito curto').max(50),
+    employees: z.preprocess((v) => v === "" ? null : v, z.coerce.number().int().min(0, 'Valor inválido').nullable()),
     status: z.enum(['ATIVO', 'INATIVO', 'CHURN']).default('ATIVO'),
     lifecycle_stage: z.enum(['LEAD', 'CLIENTE']).default('LEAD'),
-    annual_revenue: z.number().min(0).nullable(),
-    website: z.url().nullable().or(z.literal('')),
+    annual_revenue: z.preprocess((v) => v === "" ? null : v, z.coerce.number().min(0, 'A renda não pode ser negativa').nullable()),
+    website: z.preprocess((v) => v === "" ? null : v, z.url('URL Inválida').nullable()),
     created_at: z.string(),
 });
 
