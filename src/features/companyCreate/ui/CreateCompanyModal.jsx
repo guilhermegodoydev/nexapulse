@@ -34,13 +34,17 @@ export function CreateCompanyModal({ title, isOpen, onClose }) {
     
     const prevStep = () => setStep(prev => prev - 1);
 
+    const cancel = () => {
+        reset();
+        setStep(1)
+        onClose();
+    };
+    
     const onSubmit = (data) => {
         mutate(data, {
             onSuccess: () => {
                 toast.success(`Empresa ${data.trade_name} Criada!`);
-                reset();
-                setStep(1);
-                onClose();
+                cancel();
             },
             onError: () => {
                 toast.error(`Falha ao criar empresa ${data.trade_name}`);
@@ -48,8 +52,9 @@ export function CreateCompanyModal({ title, isOpen, onClose }) {
         });
     };
 
+
     return (
-        <Modal title={title} isOpen={isOpen} onClose={onClose} className="flex flex-col min-h-[80%] w-1/3">
+        <Modal title={title} isOpen={isOpen} onClose={cancel} className="flex flex-col min-h-[80%] w-1/3">
             <form onSubmit={handleSubmit(onSubmit)} className="flex-grow flex flex-col justify-between">
                 {step === 1 && (
                     <div className="space-y-4">
@@ -132,7 +137,11 @@ export function CreateCompanyModal({ title, isOpen, onClose }) {
                 )}
 
                 <div className="flex justify-between mt-4">
-                    <Button label="Voltar" props={{ type: "button" }} onClick={prevStep} className={`buttonStyle ${step === 1 ? "invisible pointer-events-none" : ""}`}/>
+                    {step === 1 ?
+                        <Button label="Cancelar" props={{ type: "button" }} onClick={cancel} className="buttonStyle"/>
+                        :
+                        <Button label="Voltar" props={{ type: "button" }} onClick={prevStep} className="buttonStyle"/>
+                    }
 
                     {step === 3 ? (
                         <Button label="Salvar" props={{ type: "submit" }} isLoading={isPending} className="buttonStyle"/>
