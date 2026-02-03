@@ -21,12 +21,15 @@ export const companySchema = z.object({
     created_at: z.string(),
 });
 
-export const createCompanySchema = companySchema.omit({
-    id: true,
-    created_at: true,
+export const companyMinimalFormSchema = companySchema.pick({
+    trade_name: true,
+    legal_name: true,
+    cnpj: true,
+    website: true,
+    industry: true,
+    employees: true,
+    annual_revenue: true
 });
-
-export const updateCompanySchema = createCompanySchema.partial();
 
 export const companySummarySchema = companySchema.pick({
     id: true,
