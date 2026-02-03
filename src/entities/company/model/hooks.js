@@ -22,7 +22,7 @@ export function useDeleteCompany() {
 
     return useMutation({
         mutationKey: ['delete-company'],
-        mutationFn: async (companyId) => { await deleteCompany(companyId); },
+        mutationFn: deleteCompany,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['companiesSummary']});
         },
@@ -44,9 +44,7 @@ export function useCreateCompany() {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: async (company) => { 
-            await createCompany(company);
-        },
+        mutationFn: createCompany,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['companiesSummary']});
         },
