@@ -20,7 +20,6 @@ export function CreateCompanyButton() {
         mutate(data, {
             onSuccess: () => {
                 toast.success(`Empresa ${data.trade_name} Criada!`);
-                cancel();
             },
             onError: () => {
                 toast.error(`Falha ao criar empresa ${data.trade_name}`);
