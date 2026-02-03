@@ -5,22 +5,23 @@ import { useState } from "react";
 import { Input } from "@shared/ui/Input";
 import { Button } from "@shared/ui/Button";
 
-import { createCompanySchema } from "../model/schema";
+import { companyMinimalFormSchema } from "../model/schema";
 
-export function CompanyForm({ onSubmit, onClose }) {
+export function CompanyForm({ onSubmit, onClose, initialState = null }) {
     const [step, setStep] = useState(1);
     const { register, trigger, handleSubmit, reset, formState: { errors }} = useForm({ 
-        resolver: zodResolver(createCompanySchema), 
+        resolver: zodResolver(companyMinimalFormSchema), 
         shouldUnregister: false, 
-        defaultValues: { status: "ATIVO"
-    }});
+        defaultValues: { status: initialState?.status || "ATIVO", lifecycleStage: initialState?.lifecycleStage}
+    });
 
     const handleNextStep = async (e) => {
         e.preventDefault();
 
         const fieldsByStep = {
-            1: ["trade_name", "legal_name", "cnpj", "website"],
-            2: ["industry", "employees", "annual_revenue"]
+            1: ["tradeName", "legalName", "cnpj", "website"],
+            2: ["industry", "employees", "annualRevenue"],
+            3: ["status", "lifecycleStage"]
         };
 
         const isValid = await trigger(fieldsByStep[step]);
@@ -44,16 +45,18 @@ export function CompanyForm({ onSubmit, onClose }) {
 
                     <Input 
                         label="Nome Fantasia *" 
-                        id="trade_name" 
-                        errorMessage={errors?.trade_name?.message}
-                        {...register("trade_name")}
+                        id="tradeName" 
+                        errorMessage={errors?.tradeName?.message}
+                        {...register("tradeName")}
+                        value={initialState?.tradeName}
                     />
 
                     <Input 
                         label="Nome Legal" 
-                        id="legal_name" 
-                        errorMessage={errors?.legal_name?.message}
-                        {...register("legal_name")}
+                        id="legalName" 
+                        errorMessage={errors?.legalName?.message}
+                        {...register("legalName")}
+                        value={initialState?.legalName}
                     />
 
                     <Input 
@@ -61,6 +64,7 @@ export function CompanyForm({ onSubmit, onClose }) {
                         id="cnpj" 
                         errorMessage={errors?.cnpj?.message}
                         {...register("cnpj")}
+                        value={initialState?.cnpj}
                     />
 
                     <Input
@@ -68,6 +72,7 @@ export function CompanyForm({ onSubmit, onClose }) {
                         id="website"
                         errorMessage={errors?.website?.message}
                         {...register("website")}
+                        value={initialState?.website}
                     />
                 </div>
             )}
@@ -81,6 +86,7 @@ export function CompanyForm({ onSubmit, onClose }) {
                         id="industry" 
                         errorMessage={errors?.industry?.message}
                         {...register("industry")}
+                        value={initialState?.indutry}
                     />
 
                     <Input 
@@ -88,13 +94,15 @@ export function CompanyForm({ onSubmit, onClose }) {
                         id="employees" 
                         errorMessage={errors?.employees?.message}
                         {...register("employees")}
+                        value={initialState?.employees}
                     />
 
                     <Input 
                         label="Renda Anual" 
-                        id="annual_revenue" 
-                        errorMessage={errors?.annual_revenue?.message}
-                        {...register("annual_revenue")}
+                        id="annualRevenue" 
+                        errorMessage={errors?.annualRevenue?.message}
+                        {...register("annualRevenue")}
+                        value={initialState?.annualRevenue}
                     />
                 </div>
             )}
@@ -110,10 +118,10 @@ export function CompanyForm({ onSubmit, onClose }) {
                         <option value="CHURN">Churn</option>
                     </select>
 
-                    <label htmlFor="lifeCycle">Ciclo de Vida *</label>
-                    <select name="lifeCycle" id="lifeCycle" {...register("lifecycle_stage")} className="focus:outline-brand-primary bg-gray-50 rounded-md shadow p-2">
-                        <option value="LEAD">Lead</option>
+                    <label htmlFor="lifecycleStage">Ciclo de Vida *</label>
+                    <select name="lifecycleStage" id="lifecycleStage" {...register("lifecycleStage")} className="focus:outline-brand-primary bg-gray-50 rounded-md shadow p-2">
                         <option value="CLIENTE">Cliente</option>
+                        <option value="LEAD">Lead</option>
                     </select>
                 </div>
             )}
