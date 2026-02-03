@@ -43,6 +43,7 @@ export function useCreateCompany() {
     const queryClient = useQueryClient();
 
     return useMutation({
+        mutationKey: ['delete-company'],
         mutationFn: async (company) => { 
             const empresa = await createCompany(company);
             console.log(empresa);
