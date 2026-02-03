@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteCompany, getCompaniesSummary, getCompaniesStat, createCompany } from '../api/api';
-import { companySummarySchema } from '../model/schema';
+import { deleteCompany, getCompaniesSummary, getCompaniesStat, createCompany, getCompanyMinimal } from '../api/api';
+import { companyMinimalFormSchema, companySummarySchema } from '../model/schema';
 import { companiesStatSchema } from '../model/statSchema';
 import { z } from 'zod';
 
@@ -50,5 +50,18 @@ export function useCreateCompany() {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['companiesSummary']});
         },
+    });
+}
+
+export function useCompanyMinimal(companyId) {
+    return useQuery({
+        queryKey: ['companyBasic', companyId],
+        queryFn: async () => {
+            const data = await getCompanyMinimal(companyId);
+            const validate = companyMinimalFormSchema.parse(data);
+            return validate;
+        },
+        enabled: !!companyId,
+        staleTime: 5 * 60 * 1000
     });
 }
