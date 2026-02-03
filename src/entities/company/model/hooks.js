@@ -45,8 +45,7 @@ export function useCreateCompany() {
     return useMutation({
         mutationKey: ['delete-company'],
         mutationFn: async (company) => { 
-            const empresa = await createCompany(company);
-            console.log(empresa);
+            await createCompany(company);
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['companiesSummary']});
