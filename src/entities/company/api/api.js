@@ -48,3 +48,14 @@ export async function createCompany(company) {
     if (error) throw new Error(error.message);
     return data;
 }
+
+export async function getCompanyMinimal(companyId) {
+    const { data, error } = await supabase
+        .from('company')
+        .select('trade_name, legal_name, cnpj, website, industry, employees, annual_revenue')
+        .eq('id', companyId)
+        .single();
+    
+    if (error) throw new Error(error.message);
+    return data;
+}
