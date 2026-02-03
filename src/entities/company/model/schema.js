@@ -39,16 +39,28 @@ export const companySummarySchema = companySchema.pick({
     company_contact: z.array(
         companyContactSchema.pick({ name: true, last_contact: true })
     ).nullable(),
-}).transform((company) => ({
-    id: company.id,
-    tradeName: company.trade_name,
-    status: { 
-        label: company.status,
-        variant: STATUS_VARIANTS[company.status.toLowerCase()] || 'neutral',
-    },
-    industry: company.industry,
-    lifecycleStage: company.lifecycle_stage.charAt(0).toUpperCase() + company.lifecycle_stage.slice(1).toLowerCase(),
-    revenue: new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', notation: 'compact', maximumFractionDigits: 1}).format(company.annual_revenue) || 0,
-    lastContact: new Date(company.company_contact?.[0]?.last_contact + 'T00:00:00').toLocaleDateString() || 'Não informado',
-    mainContactName: company.company_contact?.[0]?.name || 'Não informado',
-}));
+}).transform((company) => {
+
+    let lastContact = company.company_contact?.[0]?.last_contact;
+
+    if (lastContact) {
+        lastContact = new Date(lastContact + 'T00:00:00').toLocaleDateString();
+    }
+    else {
+        lastContact = 'Não informado';
+    }
+
+    return {
+        id: company.id,
+        tradeName: company.trade_name,
+        status: { 
+            label: company.status,
+            variant: STATUS_VARIANTS[company.status.toLowerCase()] || 'neutral',
+        },
+        industry: company.industry,
+        lifecycleStage: company.lifecycle_stage.charAt(0).toUpperCase() + company.lifecycle_stage.slice(1).toLowerCase(),
+        revenue: new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', notation: 'compact', maximumFractionDigits: 1}).format(company.annual_revenue) || 0,
+        lastContact,
+        mainContactName: company.company_contact?.[0]?.name || 'Não informado',
+    };
+});
