@@ -22,26 +22,16 @@ export const companySchema = z.object({
 });
 
 export const companyMinimalFormSchema = z.object({
-    tradeName: companySchema.shape.trade_name,
-    legalName: companySchema.shape.legal_name,
+    trade_name: companySchema.shape.trade_name,
+    legal_name: companySchema.shape.legal_name,
     cnpj: companySchema.shape.cnpj,
     website: companySchema.shape.website,
     industry: companySchema.shape.industry,
     employees: companySchema.shape.employees,
-    annualRevenue: companySchema.shape.annual_revenue,
+    annual_revenue: companySchema.shape.annual_revenue,
     status: companySchema.shape.status,
-    lifecycleStage: companySchema.shape.lifecycle_stage
-}).transform((company) => ({
-    trade_name: company.tradeName,
-    legal_name: company.legalName,
-    cnpj: company.cnpj,
-    website: company.website,
-    industry: company.industry,
-    employees: company.employees,
-    annual_revenue: company.annualRevenue,
-    status: company.status,
-    lifecycle_stage: company.lifecycleStage
-}));
+    lifecycle_stage: companySchema.shape.lifecycle_stage
+});
 
 export const companySummarySchema = companySchema.pick({
     id: true,
