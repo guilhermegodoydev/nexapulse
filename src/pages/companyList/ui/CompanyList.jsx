@@ -1,3 +1,7 @@
+import { useSearchParams } from "react-router-dom";
+import { Search } from "lucide-react";
+import { useEffect, useState } from "react";
+
 import { Table, TableSkeleton } from "@shared/ui/table/Table";
 import { StatCard } from "@shared/ui/card/StatCard";
 import { Badge } from "@shared/ui/badge/Badge";
@@ -8,10 +12,8 @@ import { useCompaniesSummary, useCompaniesStat } from "@entities/company/model/h
 
 import { DeleteCompanyButton } from "@features/companyDelete/ui/DeleteCompanyButton";
 import { CreateCompanyButton } from "@features/companyCreate/ui/CreateCompanyButton";
+import { EditCompanyButton } from "@features/companyEdit/ui/EditCompanyButton";
 
-import { useSearchParams } from "react-router-dom";
-import { Search } from "lucide-react";
-import { useEffect, useState } from "react";
 
 export function CompanyList() {
     const [ search, setSearch ] = useState("");
@@ -37,8 +39,9 @@ export function CompanyList() {
 
     const renderActions = ({ id, tradeName }) => {
         return (
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center gap-2">
                 <DeleteCompanyButton companyId={id} companyName={tradeName} />
+                <EditCompanyButton companyId={id} companyName={tradeName}/>
             </div>
         );
     };
@@ -121,7 +124,7 @@ export function CompanyList() {
                 <section>
                     {isLoading ? 
                         <>
-                            <CardSkeleton className="min-h-100"/> /////////arrumar altura
+                            <CardSkeleton className="min-h-100"/>
                             <TableSkeleton rows={pageSize} columns={columns.length}/>
                         </>
                         :
