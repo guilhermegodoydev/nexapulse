@@ -52,8 +52,20 @@ export async function createCompany(company) {
 export async function getCompanyMinimal(companyId) {
     const { data, error } = await supabase
         .from('company')
-        .select('trade_name, legal_name, cnpj, website, industry, employees, annual_revenue')
+        .select('trade_name, legal_name, cnpj, website, industry, employees, annual_revenue, status, lifecycle_stage')
         .eq('id', companyId)
+        .single();
+    
+    if (error) throw new Error(error.message);
+    return data;
+}
+
+export async function updateCompany(companyId, updates) {
+    const { data, error } = await supabase
+        .from('company')
+        .update(updates)
+        .eq('id', companyId)
+        .select()
         .single();
     
     if (error) throw new Error(error.message);
