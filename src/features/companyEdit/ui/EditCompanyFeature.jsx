@@ -1,14 +1,11 @@
-import { Pen } from "lucide-react";
 import { useState } from "react";
 import { useIsMutating } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { Button } from "@shared/ui/Button"
-
 import { EditCompanyModal } from "./EditCompanyModal";
 import { useUpdateCompany } from "@entities/company/model/hooks";
 
-export function EditCompanyButton({ companyId, companyName }) {
+export function EditCompanyFeature({ companyId, companyName, renderTrigger }) {
     const [ modalIsOpen, setModalIsOpen ] = useState(false);
     const { mutate } = useUpdateCompany();
 
@@ -32,12 +29,10 @@ export function EditCompanyButton({ companyId, companyName }) {
 
     return (
         <>
-            <Button
-                onClick={() => setModalIsOpen(true)}
-                renderItem={() => <Pen/>}
-                props={{ disabled: isDeleting }}
-                className={isDeleting ? "cursor-not-allowed!" : ""}
-            />
+            {renderTrigger({ 
+                onClick: () => setModalIsOpen(true),
+                isLoading: isDeleting
+            })}
 
             {modalIsOpen ? 
                 <EditCompanyModal

@@ -1,24 +1,20 @@
 import { useSearchParams } from "react-router-dom";
-import { Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-import { Table, TableSkeleton } from "@shared/ui/table/Table";
 import { StatCard } from "@shared/ui/card/StatCard";
-import { Badge } from "@shared/ui/badge/Badge";
-import { Card, CardSkeleton } from "@shared/ui/card/Card"
-import { useDebounce } from "@shared/lib/useDebounce";
+
+import { CardSkeleton } from "@shared/ui/card/Card"
+import { Button } from "@shared/ui/Button"
+import { SearchBar } from "@shared/ui/SearchBar";
 
 import { useCompaniesSummary, useCompaniesStat } from "@entities/company/model/hooks";
 
-import { DeleteCompanyButton } from "@features/companyDelete/ui/DeleteCompanyButton";
-import { CreateCompanyButton } from "@features/companyCreate/ui/CreateCompanyButton";
-import { EditCompanyButton } from "@features/companyEdit/ui/EditCompanyButton";
-
+import { CreateCompanyFeature } from "@features/companyCreate/ui/CreateCompanyFeature";
+import { CompanyTable } from "@widgets/company/companyTable/ui/CompanyTable";
 
 export function CompanyList() {
-    const [ search, setSearch ] = useState("");
-    const debouncedSearch = useDebounce(search, 500);
     const [ searchParams, setSearchParams ] = useSearchParams();
+    const [ debouncedSearch, setDebouncedSearch ] = useState("");
     const page = Number(searchParams.get('page') || 0);
     const pageSize = 25;
     const { data, isError, isLoading } = useCompaniesSummary(page, pageSize, debouncedSearch);
@@ -27,38 +23,15 @@ export function CompanyList() {
     const totalCount = data?.total || 0;
     const totalPages = Math.ceil(totalCount / pageSize) || 1;
 
-    useEffect(() => {
+    const handleSearch = (value) => {
         if (page !== 0) {
-            setSearchParams({ page: String(0)});
+            handlePageChange(0);
         }
-    }, [debouncedSearch]);
+        setDebouncedSearch(value);
+    }
 
     const handlePageChange = (newPage) => {
         setSearchParams({ page: String(newPage)});
-    };
-
-    const renderActions = ({ id, tradeName }) => {
-        return (
-            <div className="flex items-center justify-center gap-2">
-                <DeleteCompanyButton companyId={id} companyName={tradeName} />
-                <EditCompanyButton companyId={id} companyName={tradeName}/>
-            </div>
-        );
-    };
-
-    const addBadges = ({ status }) => {
-        return (
-            <Badge label={status.label} variant={status.variant}/>
-        );
-    };
-    
-    const addBadgeLifeCycle = ({ tradeName, lifecycleStage }) => {
-        return (
-            <div className="flex items-center gap-2">
-                <p className="font-semibold">{tradeName}</p>
-                <Badge label={lifecycleStage} variant="neutral"/>
-            </div>
-        );
     };
 
     const generateComparativeMessage = (value, percentage) => {
@@ -68,16 +41,6 @@ export function CompanyList() {
 
         return `${percentage}% vs Mês Anterior`;
     };
-
-    const columns = [
-        {label: 'Empresa', key: '', render: addBadgeLifeCycle},
-        {label: 'Status', key: '', render: addBadges},
-        {label: 'Contato', key: 'mainContactName'},
-        {label: 'Setor', key: 'industry'},
-        {label: 'Receita Anual', key: 'revenue'},
-        {label: 'Último Contato', key: 'lastContact', className: 'text-center'},
-        {label: 'Ações', key: '', render: renderActions, className: 'text-center w-20'},
-    ];
 
     if (isError || isStatError) {
         return <div>Erro ao carregar a lista de empresas.</div>;
@@ -90,7 +53,15 @@ export function CompanyList() {
                     <h1>Empresas</h1>
 
                     <div>
-                        <CreateCompanyButton/>
+                        <CreateCompanyFeature renderTrigger={({ onClick, isPending }) => (
+                            <Button 
+                                label="Adicionar" 
+                                className="bg-brand-primary text-white m-2 p-1 px-2 rounded-md" 
+                                onClick={onClick}
+                                isLoading={isPending}
+                            />
+                        )}
+                        />
                     </div>
                 </div>
                 <hr />
@@ -122,28 +93,16 @@ export function CompanyList() {
                     }
                 </section>
                 <section>
-                    {isLoading ? 
-                        <>
-                            <CardSkeleton className="min-h-100"/>
-                            <TableSkeleton rows={pageSize} columns={columns.length}/>
-                        </>
-                        :
-                        <>
-                            <Card className="flex gap-3">
-                                <Search className="text-content-base"/>
-                                <input type="text" placeholder="Nome da Empresa" className="w-full px-2 dark:text-white" value={search} onChange={(e) => setSearch(e.target.value)}/>
-                            </Card>
+                    <SearchBar isLoading={isLoading} onSearch={handleSearch} placeholder="Nome da Empresa"/>
 
-                            <Table 
-                                columns={columns} 
-                                data={data?.rows}  
-                                emptyMessage={"Nenhuma Empresa encontrada"}
-                                currentPage={page + 1}
-                                totalPages={totalPages}
-                                onPageChange={handlePageChange}
-                            />
-                        </>
-                    }
+                    <CompanyTable 
+                        data={data} 
+                        isLoading={isLoading} 
+                        currentPage={page + 1} 
+                        totalPages={totalPages} 
+                        onPageChange={handlePageChange} 
+                        pageSize={pageSize}
+                    />
                 </section>
             </main>
         </>

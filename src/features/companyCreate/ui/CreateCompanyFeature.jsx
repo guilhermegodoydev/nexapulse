@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { Button } from "@shared/ui/Button";
 import { Modal } from "@shared/ui/modal/Modal"
 
 import { useCreateCompany } from "@entities/company/model/hooks";
 import { CompanyForm } from "@entities/company/ui/CompanyForm";
 
-export function CreateCompanyButton() {
+export function CreateCompanyFeature({ renderTrigger }) {
     const [ isOpen, setIsOpen ] = useState(false);
     const { mutate, isPending } = useCreateCompany();
     
@@ -20,6 +19,7 @@ export function CreateCompanyButton() {
         mutate(data, {
             onSuccess: () => {
                 toast.success(`Empresa ${data.trade_name} Criada!`);
+                handleClose();
             },
             onError: () => {
                 toast.error(`Falha ao criar empresa ${data.trade_name}`);
@@ -29,12 +29,10 @@ export function CreateCompanyButton() {
 
     return (
         <>
-            <Button 
-                label="Adicionar" 
-                className="bg-brand-primary text-white m-2 p-1 px-2 rounded-md" 
-                onClick={() => setIsOpen(true)}
-                isLoading={isPending}
-            />
+            {renderTrigger({ 
+                onClick: () => setIsOpen(true),
+                isLoading: isPending
+            })}
 
             <Modal title={"Cadastrar Empresa"} isOpen={isOpen} onClose={handleClose} className="flex flex-col min-h-[80%] w-1/3">
                 <CompanyForm onSubmit={handleSubmit} onClose={handleClose}/>

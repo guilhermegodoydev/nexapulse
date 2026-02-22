@@ -1,13 +1,11 @@
-import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
 import { useDeleteCompany } from "@entities/company/model/hooks";
 
-import { Button } from "@shared/ui/Button";
 import { ModalConfirm } from "@shared/ui/modal/ModalConfirm";
 
-export function DeleteCompanyButton ({ companyId, companyName }) {
+export function DeleteCompanyFeature ({ companyId, companyName, renderTrigger }) {
     const [ modalIsOpen, setModalIsOpen ] = useState(false);
     const { mutate, isPending } = useDeleteCompany();
 
@@ -25,11 +23,10 @@ export function DeleteCompanyButton ({ companyId, companyName }) {
 
     return (
         <>
-            <Button
-                onClick={() => setModalIsOpen(true)}   
-                isLoading={isPending}
-                renderItem={() => <Trash2 />}
-            />
+            {renderTrigger({ 
+                onClick: () => setModalIsOpen(true),
+                isLoading: isPending
+            })}
 
             <ModalConfirm 
                 title="Confirmar Exclusão" 
