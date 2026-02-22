@@ -9,7 +9,7 @@ const generateComparativeMessage = (value, percentage) => {
     return `${percentage}% vs Mês Anterior`;
 };
 
-export function CompanyKpiCards({ isLoading, companies}) {
+export function KpiDashboardSection({ isLoading, companies}) {
     const gridStyle = "grid grid-cols-1 md:grid-cols-3 gap-10 min-h-[140px]";
     
     if (isLoading) {

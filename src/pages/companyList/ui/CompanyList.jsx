@@ -9,7 +9,7 @@ import { useCompaniesSummary, useCompaniesStat } from "@entities/company/model/h
 import { CreateCompanyFeature } from "@features/companyCreate/ui/CreateCompanyFeature";
 
 import { CompanyTable } from "@widgets/company/companyTable/ui/CompanyTable";
-import { CompanyKpiCards } from "@widgets/company/companyStats/ui/CompanyKpiCards";
+import { KpiDashboardSection } from "@widgets/company/companyStats/ui/KpiDashboardSection";
 
 export function CompanyList() { 
     const [ debouncedSearch, setDebouncedSearch ] = useState("");
@@ -53,7 +53,7 @@ export function CompanyList() {
             </header>
 
             <main className="p-4">
-                <CompanyKpiCards isLoading={isStatLoading} companies={companiesState}/>
+                <KpiDashboardSection isLoading={isStatLoading} companies={companiesState}/>
 
                 <section>
                     <SearchBar isLoading={isLoading} onSearch={handleSearch} placeholder="Nome da Empresa" className="mt-10 mb-5"/>
@@ -67,6 +67,8 @@ export function CompanyList() {
                         pageSize={pageSize}
                     />
                 </section>
+
+
             </main>
         </>
     );
