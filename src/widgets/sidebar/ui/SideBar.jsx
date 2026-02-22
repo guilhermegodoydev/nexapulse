@@ -1,4 +1,4 @@
-import { Building2, Menu, ChartPie } from "lucide-react";
+import { Building2, Menu } from "lucide-react";
 import { useMediaQuery } from "@shared/lib/useMediaQuery";
 import { useState } from "react";
 import { SideBarItem } from "./SideBarItem";
@@ -20,9 +20,6 @@ export function SideBar () {
                     <SideBarHeader isOpen={isOpen} onClose={() => setOpen(false)} isMobile={isMobile}/>
 
                     <ul className="space-y-4 my-4">
-                        <li>
-                            <SideBarItem label="Dashboard" icon={<ChartPie className={styleIcons}/>} navigateTo="/dashboard"/>
-                        </li>
                         <li>
                             <SideBarItem label="Empresas" icon={<Building2 className={styleIcons}/>} navigateTo="/companies"/>
                         </li>
