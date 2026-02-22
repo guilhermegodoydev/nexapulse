@@ -1,3 +1,6 @@
+import { StatCard } from "@shared/ui/card/StatCard";
+import { CardSkeleton } from "@shared/ui/card/Card";
+
 const generateComparativeMessage = (value, percentage) => {
     if (value === 0 || !value) {
         return "Nenhuma comparação disponínel";
@@ -7,14 +10,8 @@ const generateComparativeMessage = (value, percentage) => {
 };
 
 export function CompanyKpiCards({ isLoading, companies}) {
-
     const gridStyle = "grid grid-cols-1 md:grid-cols-3 gap-10 min-h-[140px]";
-
-    const risk = companies.companiesAtRisk;
-    const riskTrend = risk.isPositve ? "down" : "up";
-    const riskIntent = risk.isPositve ? "positive" : "negative";
-    const riskMessage = risk.isPositve  ? "-" : `+${generateComparativeMessage(risk.currentValue, risk.percentageChange)}`;
-
+    
     if (isLoading) {
         return (
             <section className={gridStyle}>
@@ -24,6 +21,11 @@ export function CompanyKpiCards({ isLoading, companies}) {
             </section>
         );
     }
+
+    const risk = companies?.companiesAtRisk ?? { currentValue: 0, previousMonth: 0, percentageChange: 0, isPositive: true };
+    const riskTrend = risk.isPositive ? "down" : "up";
+    const riskIntent = risk.isPositive ? "positive" : "negative";
+    const riskMessage = risk.isPositive ? "-" : `+${generateComparativeMessage(risk.currentValue, risk.percentageChange)}`;
 
     return (
         <section className={gridStyle}>

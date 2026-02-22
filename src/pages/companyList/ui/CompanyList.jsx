@@ -51,11 +51,12 @@ export function CompanyList() {
                 </div>
                 <hr />
             </header>
-            <main>
+
+            <main className="p-4">
                 <CompanyKpiCards isLoading={isStatLoading} companies={companiesState}/>
 
                 <section>
-                    <SearchBar isLoading={isLoading} onSearch={handleSearch} placeholder="Nome da Empresa"/>
+                    <SearchBar isLoading={isLoading} onSearch={handleSearch} placeholder="Nome da Empresa" className="mt-10 mb-5"/>
 
                     <CompanyTable 
                         data={data} 

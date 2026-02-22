@@ -3,7 +3,7 @@ import { Card, CardSkeleton } from "./card/Card";
 import { Search } from "lucide-react";
 import { useDebounce } from "../lib/useDebounce";
 
-export function SearchBar({ isLoading, onSearch, placeholder, initialValue = ""}) {
+export function SearchBar({ isLoading, onSearch, placeholder, initialValue = "", className = "" }) {
     const [ inputValue, setInputValue ] = useState(initialValue);
     const debouncedSearch = useDebounce(inputValue, 500);
     
@@ -14,7 +14,7 @@ export function SearchBar({ isLoading, onSearch, placeholder, initialValue = ""}
     if (isLoading) return <CardSkeleton className="min-h-100"/>;
 
     return (
-        <Card className="flex gap-3">
+        <Card className={`flex gap-3 ${className}`}>
             <Search className="text-content-base"/>
             <input 
                 id="search-bar"
