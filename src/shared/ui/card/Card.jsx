@@ -9,9 +9,9 @@ export function Card({ children, className }) {
     );
 };
 
-export function CardSkeleton() {
+export function CardSkeleton({ className}) {
     return (
-        <div className={CARD_STYLE + " bg-gray-100 dark:bg-gray-700 animate-pulse"}>
+        <div className={`${CARD_STYLE} bg-gray-100 dark:bg-gray-700 animate-pulse ${className}`}>
         </div>
     );
 };
