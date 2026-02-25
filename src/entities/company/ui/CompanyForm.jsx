@@ -21,9 +21,10 @@ export function CompanyForm({ onSubmit, onClose, initialState = null }) {
             employees: initialState?.employees,
             annual_revenue: initialState?.annual_revenue,
             status: initialState?.status || "ATIVO", 
-            lifecycle_stage: initialState?.lifecycleStage
+            lifecycle_stage: initialState?.lifecycle_stage
         }
     });
+    console.log(initialState);
 
     const handleNextStep = async (e) => {
         e.preventDefault();
@@ -115,14 +116,14 @@ export function CompanyForm({ onSubmit, onClose, initialState = null }) {
                     <h3>Governança e Status</h3>
                     
                     <label htmlFor="status">Status *</label>
-                    <select id="status" name="status" {...register("status")} className="focus:outline-brand-primary bg-gray-50 rounded-md shadow p-2">
+                    <select id="status" name="status" {...register("status")}>
                         <option value="ATIVO">Ativo</option>
                         <option value="INATIVO">Inativo</option>
                         <option value="CHURN">Churn</option>
                     </select>
 
                     <label htmlFor="lifecycle_stage">Ciclo de Vida *</label>
-                    <select name="lifecycle_stage" id="lifecycle_stage" {...register("lifecycle_stage")} className="focus:outline-brand-primary bg-gray-50 rounded-md shadow p-2">
+                    <select name="lifecycle_stage" id="lifecycle_stage" {...register("lifecycle_stage")}>
                         <option value="CLIENTE">Cliente</option>
                         <option value="LEAD">Lead</option>
                     </select>
