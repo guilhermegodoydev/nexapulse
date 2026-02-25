@@ -74,6 +74,7 @@ export function useUpdateCompany() {
         onSuccess: (updatedCompany) => {
             queryClient.setQueryData(['companyBasic', updatedCompany.id], updatedCompany);            
             queryClient.invalidateQueries({ queryKey: ['companiesSummary']});
+            queryClient.invalidateQueries({ queryKey: ['companiesStat']});
         },
     });
 }
