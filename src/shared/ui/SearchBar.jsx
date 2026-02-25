@@ -11,7 +11,7 @@ export function SearchBar({ isLoading, onSearch, placeholder, initialValue = "",
         onSearch(debouncedSearch);
     }, [debouncedSearch, onSearch]);
 
-    if (isLoading) return <CardSkeleton className="min-h-100"/>;
+    if (isLoading) return <CardSkeleton className="min-h-[40px] mt-10 mb-5"/>;
 
     return (
         <Card className={`flex gap-3 ${className}`}>
