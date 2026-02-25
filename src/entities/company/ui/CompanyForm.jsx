@@ -24,7 +24,6 @@ export function CompanyForm({ onSubmit, onClose, initialState = null }) {
             lifecycle_stage: initialState?.lifecycle_stage
         }
     });
-    console.log(initialState);
 
     const handleNextStep = async (e) => {
         e.preventDefault();
