@@ -12,7 +12,7 @@ export function StatCard({ title, value, comparative = "Nenhuma Comparação dis
                  trend === "down" ? <CircleArrowDown /> : "";
 
     return (
-        <Card className="flex flex-col gap-5">
+        <Card className="flex flex-col gap-5 justify-between">
             <h2 className="text-gray-500 dark:text-gray-300 font-normal text-[16px]">{title}</h2>
             <p className="font-bold text-3xl text-center dark:text-content-base">{value}</p>
             <div className={`flex justify-center items-center gap-2 ${styles[intent]}`}>
