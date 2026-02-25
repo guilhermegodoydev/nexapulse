@@ -1,6 +1,8 @@
 import { StatCard } from "@shared/ui/card/StatCard";
 import { CardSkeleton } from "@shared/ui/card/Card";
 
+import { useCompaniesStat } from "@entities/company/model/hooks";
+
 const generateComparativeMessage = (value, percentage) => {
     if (value === 0 || !value) {
         return "Nenhuma comparação disponínel";
@@ -9,8 +11,10 @@ const generateComparativeMessage = (value, percentage) => {
     return `${percentage}% vs Mês Anterior`;
 };
 
-export function KpiDashboardSection({ isLoading, companies}) {
-    const gridStyle = "grid grid-cols-1 md:grid-cols-3 gap-10 min-h-[140px]";
+export function KpiDashboardSection() {
+    const { data, isError, isLoading} = useCompaniesStat();
+    
+    const gridStyle = "grid grid-cols-2 md:grid-cols-3 gap-10 min-h-[420px] md:min-h-[150px]";
     
     if (isLoading) {
         return (
@@ -22,7 +26,11 @@ export function KpiDashboardSection({ isLoading, companies}) {
         );
     }
 
-    const risk = companies?.companiesAtRisk ?? { currentValue: 0, previousMonth: 0, percentageChange: 0, isPositive: true };
+    if (isError) {
+        return <div>Erro ao carregar a métricas de empresas.</div>;
+    }
+
+    const risk = data?.companiesAtRisk ?? { currentValue: 0, previousMonth: 0, percentageChange: 0, isPositive: true };
     const riskTrend = risk.isPositive ? "down" : "up";
     const riskIntent = risk.isPositive ? "positive" : "negative";
     const riskMessage = risk.isPositive ? "-" : `+${generateComparativeMessage(risk.currentValue, risk.percentageChange)}`;
@@ -31,7 +39,7 @@ export function KpiDashboardSection({ isLoading, companies}) {
         <section className={gridStyle}>
             <StatCard 
                 title="Empresas Ativas" 
-                value={companies.activeCompanies} 
+                value={data.activeCompanies} 
                 intent="neutral"
             />
             <StatCard 
@@ -43,7 +51,7 @@ export function KpiDashboardSection({ isLoading, companies}) {
             />
             <StatCard 
                 title="Pipeline Total" 
-                value={companies.openOpportunitiesValue}
+                value={data.openOpportunitiesValue}
             />
         </section>
     );

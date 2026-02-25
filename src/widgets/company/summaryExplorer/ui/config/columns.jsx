@@ -1,5 +1,5 @@
 import { Badge } from "@shared/ui/badge/Badge";
-import { Actions } from "../ui/Actions";
+import { Actions } from "../Actions";
 
 const addBadges = ({ status }) => {
     return (
