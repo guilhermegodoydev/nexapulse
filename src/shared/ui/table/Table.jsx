@@ -4,7 +4,10 @@ import { Button } from "../Button";
 const TABLE_STYLE = "rounded-md border-collapse w-full shadow-2xl [&_th]:p-1 [&_td]:py-2 [&_td]:px-10";
 const THEAD_STYLE = "bg-bg-card border-b-2 border-border";
 
-export function Table({ columns, data, totalPages = null, currentPage = null, onPageChange = () => {}, emptyMessage }) {
+export function Table({ columns, data, totalPages = null, currentPage = null, onPageChange = () => {}, emptyMessage, isLoading = false, rows }) {
+    if (isLoading) return <TableSkeleton rows={rows} columns={columns.length}/>;
+
+
     const styleButton="bg-bg-card border border-brand-primary text-content-base hover:bg-hover-bg hover:text-hover-text disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2 rounded-md mt-4";
 
     const getValue = (obj, path) => {
@@ -69,7 +72,7 @@ export function Table({ columns, data, totalPages = null, currentPage = null, on
     );
 };
 
-export function TableSkeleton({ rows = 8, columns = 6 }) {
+function TableSkeleton({ rows = 8, columns = 6 }) {
     const cols = Array.from({ length: columns });
     const rowsArr = Array.from({ length: rows });
 
