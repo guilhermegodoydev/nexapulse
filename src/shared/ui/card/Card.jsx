@@ -1,5 +1,5 @@
 
-const CARD_STYLE = "bg-bg-card p-2 border border-border rounded-md shadow-sm";
+const CARD_STYLE = "text-content-base bg-bg-card p-2 border border-border rounded-md shadow-sm";
 
 export function Card({ children, className }) {
     return (
