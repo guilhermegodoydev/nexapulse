@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { toast } from "sonner";
 
 import { useDeleteCompany } from "@entities/company/model/hooks";
 
