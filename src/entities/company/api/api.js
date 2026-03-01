@@ -71,3 +71,13 @@ export async function updateCompany(companyId, updates) {
     if (error) throw new Error(error.message);
     return data;
 }
+
+export async function requestCompanyDeletion(companyId) {
+    const { error } = await supabase
+        .from('company')
+        .update({ status: 'pending_deletion' })
+        .eq('id', companyId);
+    
+    if (error) throw new Error(error.message);
+    return true;
+}

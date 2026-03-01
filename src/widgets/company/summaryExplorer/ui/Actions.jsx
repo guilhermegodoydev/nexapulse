@@ -1,5 +1,5 @@
 import { Trash2, Pen } from "lucide-react";
-import { DeleteCompanyFeature } from "@features/companyDelete/ui/DeleteCompanyFeature";
+import { CompanyRequestDeletion } from "@features/companyRequestDeletion/ui/CompanyRequestDeletion";
 import { EditCompanyFeature } from "@features/companyEdit/ui/EditCompanyFeature";
 import { Button } from "@shared/ui/Button"
 
@@ -16,7 +16,7 @@ export function Actions({ company, className = "" }) {
                     className={isDeleting ? "cursor-not-allowed!" : ""}
                 />
             )}/>
-            <DeleteCompanyFeature companyId={id} companyName={tradeName} renderTrigger={({ onClick, isPending }) => (
+            <CompanyRequestDeletion companyId={id} companyName={tradeName} renderTrigger={({ onClick, isPending }) => (
                 <Button
                     onClick={onClick}   
                     isLoading={isPending}
