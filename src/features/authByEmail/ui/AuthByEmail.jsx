@@ -18,7 +18,7 @@ export function AuthByEmail() {
 
     return (
         <>
-            <form onSubmit={handleSubmit(mutate)} className="bg-card border border-border rounded-lg p-8 w-full max-w-md space-y-6">
+            <form onSubmit={handleSubmit(mutate)} className="bg-bg-card border border-border rounded-lg p-8 w-full max-w-md space-y-6 text-content-base">
                 <h1>Autenticação</h1>
 
                 <Input 
