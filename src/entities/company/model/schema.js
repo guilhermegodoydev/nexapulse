@@ -15,7 +15,7 @@ export const companySchema = z.object({
     industry: z.string().min(1, 'O setor é obrigatório').min(2, 'O setor é muito curto').max(50),
     employees: z.preprocess((v) => v === "" ? null : v, z.coerce.number().int().min(0, 'Valor inválido').nullable()),
     status: z.enum(['ATIVO', 'INATIVO', 'CHURN']).default('ATIVO'),
-    lifecycle_stage: z.enum(['LEAD', 'CLIENTE']).default('LEAD'),
+    lifecycle_stage: z.enum(['lead', 'cliente']).default('lead'),
     annual_revenue: z.preprocess((v) => v === "" ? null : v, z.coerce.number().min(0, 'A renda não pode ser negativa').nullable()),
     website: z.preprocess((v) => v === "" ? null : v, z.url('URL Inválida').nullable()),
     created_at: z.string(),

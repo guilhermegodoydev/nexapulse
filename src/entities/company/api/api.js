@@ -7,7 +7,7 @@ export async function getCompaniesSummary(page = 0, pageSize = 25, search) {
     let query = supabase
         .from('company')
         .select('id, trade_name, status, annual_revenue, lifecycle_stage, industry, company_contact( name, last_contact )', { count: 'exact'})
-        .eq('company_contact.is_main_contact', true)
+        .eq('company_contact.is_main_contact', true);
 
     if (search) {
         query = query.or(`trade_name.ilike.%${search}%`);
