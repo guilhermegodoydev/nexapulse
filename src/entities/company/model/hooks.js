@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteCompany, getCompaniesSummary, getCompaniesStat, createCompany, getCompanyMinimal, updateCompany, requestCompanyDeletion } from '../api/api';
+import { getCompaniesSummary, getCompaniesStat, createCompany, getCompanyMinimal, updateCompany } from '../api/api';
 import { companyMinimalFormSchema, companySummarySchema } from '../model/schema';
 import { companiesStatSchema } from '../model/statSchema';
 import { z } from 'zod';
@@ -14,19 +14,6 @@ export function useCompaniesSummary(page = 0, pageSize = 25, search) {
         },
         staleTime: 5 * 60 * 1000,
         placeholderData: (prev) => prev,
-    });
-}
-
-export function useDeleteCompany() {
-    const queryClient = useQueryClient();
-
-    return useMutation({
-        mutationKey: ['delete-company'],
-        mutationFn: deleteCompany,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['companiesStat']});
-            queryClient.invalidateQueries({ queryKey: ['companiesSummary']});
-        },
     });
 }
 

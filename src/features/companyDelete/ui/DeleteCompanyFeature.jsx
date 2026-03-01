@@ -11,14 +11,7 @@ export function DeleteCompanyFeature ({ companyId, companyName, renderTrigger })
 
     const handleDelete = () => {
         setModalIsOpen(false);
-        mutate(companyId, {
-            onSuccess: () => { 
-                toast.success(`Empresa ${companyName} excluída com sucesso!`);
-            },
-            onError: () => {
-                toast.error(`Erro ao excluir a empresa ${companyName}. Tente novamente mais tarde.`);
-            }
-        });
+        mutate({ companyId, companyName });
     };
 
     return (

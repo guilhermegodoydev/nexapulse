@@ -21,16 +21,6 @@ export async function getCompaniesSummary(page = 0, pageSize = 25, search) {
     return { data, total: count || 0 };
 };
 
-export async function deleteCompany(companyId) {
-    const { error } = await supabase
-    .from('company')    
-    .delete()
-    .eq('id', companyId);
-
-    if (error) throw new Error(error.message);
-    return true;
-}
-
 export async function getCompaniesStat() {
     const { data, error } = await supabase.rpc('get_company_stats')
 
