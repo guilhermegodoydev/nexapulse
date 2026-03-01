@@ -28,17 +28,6 @@ export async function getCompaniesStat() {
     return data;
 }
 
-export async function createCompany(company) {
-    const { data, error } = await supabase
-        .from('company')
-        .insert([company])
-        .select()
-        .single();
-
-    if (error) throw new Error(error.message);
-    return data;
-}
-
 export async function getCompanyMinimal(companyId) {
     const { data, error } = await supabase
         .from('company')
