@@ -38,15 +38,3 @@ export async function getCompanyMinimal(companyId) {
     if (error) throw new Error(error.message);
     return data;
 }
-
-export async function updateCompany(companyId, updates) {
-    const { data, error } = await supabase
-        .from('company')
-        .update(updates)
-        .eq('id', companyId)
-        .select()
-        .single();
-    
-    if (error) throw new Error(error.message);
-    return data;
-}

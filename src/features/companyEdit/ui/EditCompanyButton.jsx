@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useIsMutating } from "@tanstack/react-query";
-import { toast } from "sonner";
-
+import { Button } from "@shared/ui/Button";
+import { Pen } from "lucide-react";
 import { EditCompanyModal } from "./EditCompanyModal";
-import { useUpdateCompany } from "@entities/company/model/hooks";
+import { useUpdateCompany } from "../model/hooks";
 
-export function EditCompanyFeature({ companyId, companyName, renderTrigger }) {
+export function EditCompanyButton({ companyId, companyName }) {
     const [ modalIsOpen, setModalIsOpen ] = useState(false);
     const { mutate } = useUpdateCompany();
 
@@ -17,22 +17,17 @@ export function EditCompanyFeature({ companyId, companyName, renderTrigger }) {
 
     const handleSubmit = (updates) => {
         handleClose();
-        mutate({ companyId, updates }, {
-            onSuccess: (companyUpdated) => {
-                toast.success(`Dados da empresa ${companyUpdated.trade_name} alterados com Sucesso!`);
-            },
-            onError: () => {
-                toast.error(`Falha ao alterar dados de empresa ${companyName}`);
-            }
-        });
+        mutate({ companyId, updates });
     };
 
     return (
         <>
-            {renderTrigger({ 
-                onClick: () => setModalIsOpen(true),
-                isLoading: isDeleting
-            })}
+            <Button
+                onClick={() => setModalIsOpen(true)}
+                renderItem={() => <Pen/>}
+                props={{ disabled: isDeleting }}
+                className={isDeleting ? "cursor-not-allowed!" : ""}
+            />
 
             {modalIsOpen ? 
                 <EditCompanyModal

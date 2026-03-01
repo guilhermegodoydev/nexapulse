@@ -1,21 +1,12 @@
-import { Pen } from "lucide-react";
 import { CompanyRequestDeletionButton } from "@features/companyRequestDeletion/ui/CompanyRequestDeletionButton";
-import { EditCompanyFeature } from "@features/companyEdit/ui/EditCompanyFeature";
-import { Button } from "@shared/ui/Button"
+import { EditCompanyButton } from "@features/companyEdit/ui/EditCompanyButton";
 
 export function Actions({ company, className = "" }) {
     const { id, tradeName } = company;
 
     return (
         <div className={`flex items-center justify-center gap-2 ${className}`}>
-            <EditCompanyFeature companyId={id} companyName={tradeName} renderTrigger={({ onClick, isDeleting }) => (
-                <Button
-                    onClick={onClick}
-                    renderItem={() => <Pen/>}
-                    props={{ disabled: isDeleting }}
-                    className={isDeleting ? "cursor-not-allowed!" : ""}
-                />
-            )}/>
+            <EditCompanyButton companyId={id} companyName={tradeName} />
             <CompanyRequestDeletionButton companyId={id} companyName={tradeName} />
         </div>
     );
