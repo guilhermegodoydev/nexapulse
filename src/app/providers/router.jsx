@@ -15,6 +15,10 @@ export const router = createBrowserRouter([
         },
         children: [
             {
+                index: true,
+                loader: () => redirect("/companies"),
+            },
+            {
                 path: "companies",
                 element: <CompaniesPage/>,
             },
@@ -25,7 +29,7 @@ export const router = createBrowserRouter([
         element: <AuthPage/>,
         loader: async () => {
             const { data: { session } } = await supabase.auth.getSession();
-            if (session) return redirect("/");
+            if (session) return redirect("/companies");
             return null;
         }
     }
