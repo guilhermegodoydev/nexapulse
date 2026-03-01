@@ -1,21 +1,25 @@
 import { useEffect, useState } from "react";
 import { Card, CardSkeleton } from "./card/Card";
-import { Search } from "lucide-react";
+import { Search, Loader2 } from "lucide-react";
 import { useDebounce } from "../lib/useDebounce";
 
 export function SearchBar({ isLoading, onSearch, placeholder, initialValue = "", className = "" }) {
     const [ inputValue, setInputValue ] = useState(initialValue);
-    const debouncedSearch = useDebounce(inputValue, 500);
+    const debouncedValue = useDebounce(inputValue, 500);
     
     useEffect(() => {
-        onSearch(debouncedSearch);
-    }, [debouncedSearch, onSearch]);
+        onSearch(debouncedValue);
+    }, [debouncedValue, onSearch]);
 
-    if (isLoading) return <CardSkeleton className="min-h-[40px] mt-10 mb-5"/>;
+    if (isLoading && !inputValue) return <CardSkeleton className="min-h-[40px] mt-10 mb-5"/>;
 
     return (
         <Card className={`flex gap-3 ${className}`}>
-            <Search className="text-content-base"/>
+            {isLoading ? (
+                <Loader2 className="animate-spin text-content-base" size={20} />
+            ) : (
+                <Search className="text-content-base" size={20} />
+            )}
             <input 
                 id="search-bar"
                 type="text" 
