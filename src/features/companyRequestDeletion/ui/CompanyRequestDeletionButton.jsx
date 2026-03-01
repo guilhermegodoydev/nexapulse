@@ -1,6 +1,6 @@
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
-import { ModalConfirm } from "@shared/ui/ModalConfirm";
+import { ModalConfirm } from "@shared/ui/modal/ModalConfirm";
 import { Button } from "@shared/ui/Button";
 import { useRequestCompanyDeletion } from "../model/hooks";
 
