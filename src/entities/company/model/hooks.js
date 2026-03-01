@@ -16,7 +16,6 @@ export function useCompaniesSummary(page = 0, pageSize = 25, search) {
       return { rows: validate, total };
     },
     enabled: !!session,
-    staleTime: 5 * 60 * 1000,
     placeholderData: (prev) => prev,
   });
 }
@@ -38,7 +37,6 @@ export function useCompaniesStat() {
         }
     },
     enabled: !!session,
-    staleTime: 5 * 60 * 1000,
   });
 }
 
@@ -59,6 +57,5 @@ export function useCompanyMinimal(companyId) {
         }
     },
     enabled: !!companyId,
-    staleTime: 5 * 60 * 1000,
   });
 }
