@@ -1,25 +1,25 @@
-export function CompanyRequestDeletion({ companyId, companyName, renderTrigger }) {
+import { Trash2 } from "lucide-react";
+import { useState } from "react";
+import { ModalConfirm } from "@shared/ui/ModalConfirm";
+import { Button } from "@shared/ui/Button";
+import { useRequestCompanyDeletion } from "../model/hooks";
+
+export function CompanyRequestDeletionButton({ companyId, companyName }) {
     const [ modalIsOpen, setModalIsOpen ] = useState(false);
     const { mutate, isPending } = useRequestCompanyDeletion();
 
     const handleDelete = () => {
         setModalIsOpen(false);
-        mutate(companyId, {
-            onSuccess: () => {
-                toast.success(`Solicitação de exclusão para a empresa ${companyName} enviada com sucesso!`);
-            },
-            onError: () => {
-                toast.error(`Erro ao solicitar exclusão para a empresa ${companyName}. Tente novamente mais tarde.`);
-            }
-        });
+        mutate({ companyId, companyName });
     };
 
     return (
         <>
-            {renderTrigger({ 
-                onClick: () => setModalIsOpen(true),
-                isLoading: isPending
-            })}
+            <Button
+                onClick={() => setModalIsOpen(true)}   
+                isLoading={isPending}
+                renderItem={() => <Trash2 />}
+            />
 
             <ModalConfirm 
                 title={`Mover empresa para a lixeira`} 

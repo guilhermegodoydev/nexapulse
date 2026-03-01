@@ -1,5 +1,5 @@
-import { Trash2, Pen } from "lucide-react";
-import { CompanyRequestDeletion } from "@features/companyRequestDeletion/ui/CompanyRequestDeletion";
+import { Pen } from "lucide-react";
+import { CompanyRequestDeletionButton } from "@features/companyRequestDeletion/ui/CompanyRequestDeletionButton";
 import { EditCompanyFeature } from "@features/companyEdit/ui/EditCompanyFeature";
 import { Button } from "@shared/ui/Button"
 
@@ -16,13 +16,7 @@ export function Actions({ company, className = "" }) {
                     className={isDeleting ? "cursor-not-allowed!" : ""}
                 />
             )}/>
-            <CompanyRequestDeletion companyId={id} companyName={tradeName} renderTrigger={({ onClick, isPending }) => (
-                <Button
-                    onClick={onClick}   
-                    isLoading={isPending}
-                    renderItem={() => <Trash2 />}
-                />
-            )}/>
+            <CompanyRequestDeletionButton companyId={id} companyName={tradeName} />
         </div>
     );
 };

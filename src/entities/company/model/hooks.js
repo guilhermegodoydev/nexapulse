@@ -78,15 +78,3 @@ export function useUpdateCompany() {
         },
     });
 }
-
-export function useRequestCompanyDeletion() {
-    const queryClient = useQueryClient();
-
-    return useMutation({
-        mutationFn: requestCompanyDeletion,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['companiesSummary']});
-            queryClient.invalidateQueries({ queryKey: ['companiesStat']});
-        },
-    });
-}
