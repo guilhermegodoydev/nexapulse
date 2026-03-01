@@ -21,7 +21,7 @@ export function CompanyForm({ onSubmit, onClose, initialState = null }) {
             employees: initialState?.employees,
             annual_revenue: initialState?.annual_revenue,
             status: initialState?.status || "ATIVO", 
-            lifecycle_stage: initialState?.lifecycle_stage || "LEAD"
+            lifecycle_stage: initialState?.lifecycle_stage || "lead"
         }
     });
 
@@ -123,8 +123,8 @@ export function CompanyForm({ onSubmit, onClose, initialState = null }) {
 
                     <label htmlFor="lifecycle_stage">Ciclo de Vida *</label>
                     <select name="lifecycle_stage" id="lifecycle_stage" {...register("lifecycle_stage")}>
-                        <option value="CLIENTE">Cliente</option>
-                        <option value="LEAD">Lead</option>
+                        <option value="cliente">Cliente</option>
+                        <option value="lead">Lead</option>
                     </select>
                 </div>
             )}
