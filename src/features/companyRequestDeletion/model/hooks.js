@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { requestCompanyDeletion } from "../api/api";
+import { toast } from "sonner";
 
 export function useRequestCompanyDeletion() {
     const queryClient = useQueryClient();

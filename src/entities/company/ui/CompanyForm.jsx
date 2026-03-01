@@ -21,7 +21,7 @@ export function CompanyForm({ onSubmit, onClose, initialState = null }) {
             employees: initialState?.employees,
             annual_revenue: initialState?.annual_revenue,
             status: initialState?.status || "ATIVO", 
-            lifecycle_stage: initialState?.lifecycle_stage
+            lifecycle_stage: initialState?.lifecycle_stage || "LEAD"
         }
     });
 

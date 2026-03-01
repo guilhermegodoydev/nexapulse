@@ -8,6 +8,11 @@ export async function updateCompany(companyId, updates) {
         .select()
         .single();
     
-    if (error) throw new Error(error.message);
+    if (error) {
+        console.error('Erro ao atualizar empresa:', error);
+        throw new Error(
+            error.message || 'Erro ao atualizar empresa. Tente novamente mais tarde.'
+        );
+    }
     return data;
 }
