@@ -26,6 +26,7 @@ export function AuthByEmail() {
                     id="email" 
                     errorMessage={errors?.email?.message}
                     disabled
+                    autoComplete="email"
                     className="cursor-not-allowed bg-gray-200"
                     {...register("email")} 
                 />
@@ -35,11 +36,12 @@ export function AuthByEmail() {
                     type="password" 
                     errorMessage={errors?.password?.message}
                     disabled
+                    autoComplete="current-password"
                     className="cursor-not-allowed bg-gray-200"
                     {...register("password")} 
                 />
 
-                <Button type="submit" isLoading={isPending} label="Entrar" />
+                <Button type="submit" isLoading={isPending} label="Entrar" className="bg-brand-primary w-full rounded-md text-white p-2"/>
             </form>
         </>
     );
