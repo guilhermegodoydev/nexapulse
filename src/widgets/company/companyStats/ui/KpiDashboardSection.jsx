@@ -30,7 +30,7 @@ export function KpiDashboardSection() {
         return <div>Erro ao carregar a métricas de empresas.</div>;
     }
 
-    const risk = data?.companiesAtRisk ?? { currentValue: 0, previousMonth: 0, percentageChange: 0, isPositive: true };
+    const risk = data.companiesAtRisk;
     const riskTrend = risk.isPositive ? "down" : "up";
     const riskIntent = risk.isPositive ? "positive" : "negative";
     const riskMessage = risk.isPositive ? "-" : `+${generateComparativeMessage(risk.currentValue, risk.percentageChange)}`;
