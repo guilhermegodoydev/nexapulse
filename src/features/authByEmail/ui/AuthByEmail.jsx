@@ -9,6 +9,10 @@ export function AuthByEmail() {
     const { mutate, isPending } = useSignInWithEmail();
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: zodResolver(authByEmailSchema),
+        defaultValues: {
+            email: "fabio@nexus.com",
+            password: "fabio123"
+        }
     });
 
 
@@ -21,6 +25,8 @@ export function AuthByEmail() {
                     label="Email" 
                     id="email" 
                     errorMessage={errors?.email?.message}
+                    disabled
+                    className="cursor-not-allowed bg-gray-200"
                     {...register("email")} 
                 />
                 <Input 
@@ -28,6 +34,8 @@ export function AuthByEmail() {
                     id="password" 
                     type="password" 
                     errorMessage={errors?.password?.message}
+                    disabled
+                    className="cursor-not-allowed bg-gray-200"
                     {...register("password")} 
                 />
 
