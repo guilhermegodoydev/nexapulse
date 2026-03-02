@@ -8,13 +8,8 @@ import { authByEmailSchema } from "@entities/user/model/schema";
 export function AuthByEmail() {
     const { mutate, isPending } = useSignInWithEmail();
     const { register, handleSubmit, formState: { errors } } = useForm({
-        resolver: zodResolver(authByEmailSchema),
-        defaultValues: {
-            email: "fabio@nexus.com",
-            password: "fabio123"
-        }
+        resolver: zodResolver(authByEmailSchema)
     });
-
 
     return (
         <>
@@ -25,19 +20,16 @@ export function AuthByEmail() {
                     label="Email" 
                     id="email" 
                     errorMessage={errors?.email?.message}
-                    disabled
                     autoComplete="email"
-                    className="cursor-not-allowed bg-gray-200"
                     {...register("email")} 
                 />
+                
                 <Input 
                     label="Senha" 
                     id="password" 
                     type="password" 
                     errorMessage={errors?.password?.message}
-                    disabled
                     autoComplete="current-password"
-                    className="cursor-not-allowed bg-gray-200"
                     {...register("password")} 
                 />
 
