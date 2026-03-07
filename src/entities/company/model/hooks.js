@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { getCompaniesSummary, getCompaniesStat, getCompanyMinimal } from "../api/api";
 import { companyMinimalFormSchema, companySummarySchema } from "../model/schema";
 import { companiesStatSchema } from "../model/statSchema";
@@ -16,7 +16,8 @@ export function useCompaniesSummary(page = 0, pageSize = 25, search) {
       return { rows: validate, total };
     },
     enabled: !!session,
-    placeholderData: (prev) => prev,
+    placeholderData: keepPreviousData,
+    staleTime: 1000 * 60 * 5, 
   });
 }
 
