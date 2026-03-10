@@ -7,6 +7,16 @@ const STATUS_VARIANTS = {
     churn: 'danger'
 };
 
+const ensureHttps = (value) => {
+  if (typeof value !== 'string' || value.trim() === '') return value;
+  
+  let url = value.trim();
+  if (!/^https?:\/\//i.test(url)) {
+    url = `https://${url}`;
+  }
+  return url;
+};
+
 export const companySchema = z.object({
     id: z.uuid(),
     trade_name: z.string().min(1, 'O nome é obrigatório').min(2, 'O nome é muito curto').max(100, 'O nome é muito longo'),
@@ -17,7 +27,7 @@ export const companySchema = z.object({
     status: z.enum(['ATIVO', 'INATIVO', 'CHURN']).default('ATIVO'),
     lifecycle_stage: z.enum(['lead', 'cliente']).default('lead'),
     annual_revenue: z.preprocess((v) => v === "" ? null : v, z.coerce.number().min(0, 'A renda não pode ser negativa').nullable()),
-    website: z.preprocess((v) => v === "" ? null : v, z.url('URL Inválida').nullable()),
+    website: z.preprocess(ensureHttps, z.url({ message: "URL inválida" }).optional().or(z.literal(''))),
     created_at: z.string(),
 });
 
