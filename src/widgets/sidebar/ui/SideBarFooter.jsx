@@ -9,10 +9,10 @@ export function SideBarFooter() {
 
             <ul className="space-y-4 my-4 px-4">
                 <li>
-                    <LogoutButton />
+                    <SideBarItem label="Configurações" navigateTo="config" icon={<Settings className="text-content-base"/>}/>
                 </li>
                 <li>
-                    <SideBarItem label="Configurações" icon={<Settings className="text-content-base"/>}/>
+                    <LogoutButton />
                 </li>
             </ul>
         </div>

@@ -4,6 +4,7 @@ import { CompaniesPage } from "@pages/CompaniesPage";
 import { AuthPage } from "@pages/AuthPage";
 import { supabase } from "@shared/api/supabaseClient";
 import { RootFallback } from "../ui/RootFallback";
+import { ConfigPage } from "@pages/ConfigPage";
 
 export const router = createBrowserRouter([
     {
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
                 path: "companies",
                 element: <CompaniesPage/>,
             },
+            {
+                path: "config",
+                element: <ConfigPage/>
+            }
         ]
     },
     {
