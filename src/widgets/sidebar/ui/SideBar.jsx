@@ -15,7 +15,7 @@ export function SideBar () {
         <div>
             {isMobile && !isOpen ? <button aria-label="Abrir menu" onClick={() => setOpen(true)}><Menu/></button> : null}
             
-            <aside className={`fixed flex flex-col justify-between left-0 top-0 bottom-0 bg-bg-card shadow-xl rounded-r-xl transition-all duration-300 ease-in-out ${ isMobile && !isOpen ? "-translate-x-full" : "translate-x-0"} z-[2] w-[80%] group lg:w-auto`}>
+            <aside className={`fixed flex flex-col justify-between left-0 top-0 bottom-0 bg-bg-card shadow-xl rounded-r-xl transition-all duration-300 ease-in-out z-[2] w-[80%] group lg:w-auto ${ isMobile && !isOpen ? "-translate-x-full" : "translate-x-0"}`}>
                 <div className="p-4">
                     <SideBarHeader isOpen={isOpen} onClose={() => setOpen(false)} isMobile={isMobile}/>
 
