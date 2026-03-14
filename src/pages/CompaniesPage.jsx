@@ -2,6 +2,7 @@ import { CreateCompanyButton } from "@features/companyCreate/ui/CreateCompanyBut
 
 import { KpiDashboardSection } from "@widgets/company/companyStats/ui/KpiDashboardSection";
 import { SummaryExplorer } from "@widgets/company/summaryExplorer/ui/SummaryExplorer";
+import { CompanyViewNotesDrawer } from "@widgets/company/companyNotes/ui/CompanyNotesDrawer";
 
 export function CompaniesPage() { 
     return (
@@ -22,6 +23,8 @@ export function CompaniesPage() {
 
                 <SummaryExplorer/>
             </main>
+
+            <CompanyViewNotesDrawer />
         </>
     );
 };

@@ -1,28 +1,27 @@
 import { X } from "lucide-react";
-import { createPortal } from "react-dom";
+import { Overlay } from "../overlay/Overlay";
 
-export function Modal({ isOpen, title, onClose, children, className}) {
-    if (!isOpen) return null;
-
-    const portalRoot = document.getElementById('modal-root');
-
-    if (!portalRoot) {
-        console.error("Modal root elemento não encontrado.");
-        return null;
-    }
-
-    return createPortal(
-        <div className="fixed z-3 backdrop-blur-xs inset-0 bg-black/70 bg-opacity-50 flex items-center justify-center">
-            <div className={`bg-bg-card p-6 rounded-lg shadow-lg w-full max-w-lg mx-4 text-content-base ${className}`}>
-                <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-xl font-bold">{title}</h2>
-                    <button aria-label="Fechar Modal" className="cursor-pointer" onClick={onClose}>
-                        <X/>
-                    </button>
+export function Modal({ isOpen, title, description, onClose, children, className }) {
+    return (
+        <Overlay isOpen={isOpen} onClose={onClose}>
+            <div className="flex items-center justify-center min-h-screen pointer-events-none">
+                <div className={`bg-bg-card p-6 rounded-lg shadow-lg w-full max-w-lg mx-4 text-content-base pointer-events-auto ${className}`}>
+                    <div className="flex items-center justify-between mb-4">
+                        <div>
+                            <h2 className="text-xl font-bold">{title}</h2>
+                            {description && <p className="text-sm text-content-muted mt-1">{description}</p>}
+                        </div>
+                        <button 
+                            aria-label="Fechar Modal" 
+                            className="cursor-pointer hover:opacity-75 transition-opacity flex-shrink-0 ml-4"
+                            onClick={onClose}
+                        >
+                            <X size={20} />
+                        </button>
+                    </div>
+                    {children}
                 </div>
-                {children}
             </div>
-        </div>
-        , portalRoot
+        </Overlay>
     );
 };
