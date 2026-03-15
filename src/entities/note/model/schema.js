@@ -8,11 +8,3 @@ export const noteSchema = z.object({
     company_id: z.uuid(),
 });
 
-export const noteViewSchema = noteSchema.omit({
-    company_id: true,
-}).transform((note) => ({
-    id : note.id,
-    title: note.title,
-    description: note.description,
-    createdAt: new Date(note.created_at).toLocaleDateString()
-}));
