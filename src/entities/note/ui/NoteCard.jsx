@@ -1,8 +1,8 @@
 import { Card } from "@shared/ui/card/Card";
 
-export function NoteCard({ note, onClick, actions }) {
+export function NoteCard({ note, actions }) {
     return (
-        <Card className="px-4 hover:shadow-md transition-shadow" onClick={onClick}>
+        <Card className="px-4 hover:shadow-md transition-shadow">
             <div className="space-y-3">
                 <h3 className="font-semibold text-content-base text-sm truncate" title={note.title}>
                     {note.title}
