@@ -44,23 +44,21 @@ export function CompanyViewNotesDrawer() {
             isError={Boolean(error)}
             errorMessage="Erro ao carregar notas"
         >
-            <div className="mt-8 space-y-4">
+            <div className="mt-5 max-h-[76%] overflow-y-scroll space-y-4">
                 {isCreating ? <NewNote companyId={companyId} onClose={() => setIsCreating(false)}/> : null}
                 {notes && notes.length > 0 ? (
-                    <div className="mt-8 space-y-4">
-                        {notes.map((note) => (
-                            <NoteCard 
-                                key={note.id} 
-                                note={note} 
-                                companyId={companyId}
-                                actions={
-                                    <>
-                                        <DeleteNoteButton companyId={companyId} noteId={note?.id}/>
-                                    </>
-                                }
-                            />
-                        ))}
-                    </div>
+                    notes.map((note) => (
+                        <NoteCard 
+                            key={note.id} 
+                            note={note} 
+                            companyId={companyId}
+                            actions={
+                                <>
+                                    <DeleteNoteButton companyId={companyId} noteId={note?.id}/>
+                                </>
+                            }
+                        />
+                    ))
                 ) : (
                     <div className="text-center">
                         <p className="text-content-muted text-sm">
