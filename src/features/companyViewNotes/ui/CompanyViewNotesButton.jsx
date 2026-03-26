@@ -6,6 +6,6 @@ export function CompanyViewNotesButton({ companyId }) {
     const { setParams } = useQueryParams();
 
     return (
-        <Button onClick={() => setParams('companyId' , companyId)} renderItem={() => <NotepadText/>}/>
+        <Button onClick={() => setParams({companyId: companyId})} renderItem={() => <NotepadText/>}/>
     );
 }

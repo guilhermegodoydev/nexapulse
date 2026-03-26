@@ -4,9 +4,16 @@ import { companyMinimalFormSchema, companySummarySchema } from "../model/schema"
 import { companiesStatSchema } from "../model/statSchema";
 import { z } from "zod";
 import { useSession } from "@entities/user/model/sessionContext";
+import { useQueryParams } from "@shared/lib/useQueryParams";
 
-export function useCompaniesSummary(page = 0, pageSize = 25, search) {
+
+export function useCompaniesSummary() {
   const { session } = useSession();
+  const { getParams } = useQueryParams();
+
+  const page = Number(getParams("page")) || 0;
+  const pageSize = Number(getParams("pageSize")) || 25;
+  const search = getParams("search") || "";
 
   return useQuery({
     queryKey: ["companiesSummary", { page, pageSize, search }, session?.user?.id],

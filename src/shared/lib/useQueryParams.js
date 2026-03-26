@@ -5,16 +5,20 @@ export function useQueryParams() {
 
   const getParams = (key) => searchParams.get(key);
 
-  const setParams = (key, value) => {
+  const setParams = (paramsObj) => {
     const newParams = new URLSearchParams(searchParams);
-
-    if (value) {
-      newParams.set(key, value);
-    } else {
-      newParams.delete(key);
+    
+    Object.entries(paramsObj).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        newParams.set(key, String(value));
+      } else {
+        newParams.delete(key);
+      }      
+    });
+    
+    if (newParams.toString() !== searchParams.toString()) {
+        setSearchParams(newParams);
     }
-
-    setSearchParams(newParams);
   };
 
   const clearParams = (keys) => {
