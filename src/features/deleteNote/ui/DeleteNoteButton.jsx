@@ -11,9 +11,10 @@ export function DeleteNoteButton({ companyId, noteId }) {
 
     return (
         <Button
-            renderItem={() => <Trash2/>}
             onClick={handleDelete}
             isLoading={isPending}
-        />
+        >
+            <Trash2/>
+        </Button>
     );
 };

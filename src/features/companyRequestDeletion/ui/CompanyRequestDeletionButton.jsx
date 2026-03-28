@@ -18,8 +18,9 @@ export function CompanyRequestDeletionButton({ companyId, companyName }) {
             <Button
                 onClick={() => setModalIsOpen(true)}   
                 isLoading={isPending}
-                renderItem={() => <Trash2 />}
-            />
+            >
+                <Trash2 />
+            </Button>
 
             <ModalConfirm 
                 title={`Mover empresa para a lixeira`} 

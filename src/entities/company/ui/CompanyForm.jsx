@@ -131,15 +131,15 @@ export function CompanyForm({ onSubmit, onClose, initialState = null }) {
 
             <div className="flex justify-between mt-4">
                 {step === 1 ?
-                    <Button label="Cancelar" props={{ type: "button" }} onClick={cancel} className="buttonStyle"/>
+                    <Button label="Cancelar" type="button" onClick={cancel} className="buttonStyle"/>
                     :
-                    <Button label="Voltar" props={{ type: "button" }} onClick={() => setStep(prev => prev - 1)} className="buttonStyle"/>
+                    <Button label="Voltar" type="button" onClick={() => setStep(prev => prev - 1)} className="buttonStyle"/>
                 }
 
                 {step === 3 ? (
-                    <Button label="Salvar" props={{ type: "submit" }} className="buttonStyle"/>
+                    <Button label="Salvar" type="submit" className="buttonStyle"/>
                 ) : (
-                    <Button label="Próximo" props={{ type: "button" }} onClick={handleNextStep} className="buttonStyle"/>
+                    <Button label="Próximo" type="button" onClick={handleNextStep} className="buttonStyle"/>
                 )}
             </div>
         </form>

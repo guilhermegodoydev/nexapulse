@@ -24,10 +24,11 @@ export function EditCompanyButton({ companyId, companyName }) {
         <>
             <Button
                 onClick={() => setModalIsOpen(true)}
-                renderItem={() => <Pen/>}
                 props={{ disabled: isDeleting }}
                 className={isDeleting ? "cursor-not-allowed!" : ""}
-            />
+            >
+                <Pen/>
+            </Button>
 
             {modalIsOpen ? 
                 <EditCompanyModal
