@@ -25,8 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      issues: write
-      pull-requests: write
+      deployments: write
+      statuses: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -40,6 +40,7 @@ jobs:
         run: |
           npm ci
           npm run build
+          tar -czf release-assets.tar.gz -C dist .
 
       - name: Deploy Netlify
         uses: nwtgck/actions-netlify@v3.0

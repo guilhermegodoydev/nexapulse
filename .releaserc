@@ -26,7 +26,7 @@
       "@semantic-release/github",
       {
         "assets": [
-          { "path": "dist/**", "label": "Build de Produção" }
+          { "path": "release-assets.tar.gz", "label": "Build de Produção" }
         ],
         "successComment": "Esta PR foi incluída na release ${nextRelease.version}!",
         "releasedLabels": ["released"]
