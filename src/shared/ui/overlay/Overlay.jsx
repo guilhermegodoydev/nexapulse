@@ -4,14 +4,16 @@ import { useEffect, useState } from "react";
 export function Overlay({ isOpen, onClose, children }) {
     const [isMounted, setIsMounted] = useState(isOpen);
 
+    if (isOpen && !isMounted) {
+        setIsMounted(true);
+    }
+
     useEffect(() => {
-        if (isOpen) {
-            setIsMounted(true);
-        } else {
+        if (!isOpen && isMounted) {
             const timer = setTimeout(() => setIsMounted(false), 300);
             return () => clearTimeout(timer);
         }
-    }, [isOpen]);
+    }, [isOpen, isMounted]);
 
     useEffect(() => {
         if (!isMounted) return;
