@@ -5,7 +5,7 @@ import { QueryProvider } from './providers/query.jsx'
 import { ToastProvider } from './providers/toast.jsx'
 import { router } from './providers/router'
 import './index.css'
-import { SessionProvider } from '@entities/user/model/sessionContext.jsx'
+import { SessionProvider } from '@entities/user/model/sessionProvider.jsx'
 import { RootFallback } from './ui/RootFallback.jsx'
 
 createRoot(document.getElementById('root')).render(
