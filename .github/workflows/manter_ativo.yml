@@ -1,0 +1,16 @@
+name: Manter Supabase Ativo
+
+on:
+  schedule:
+    - cron: '0 0 */4 * *'
+  workflow_dispatch:
+
+jobs:
+  ping_api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enviar requisição para o Supabase
+        run: |
+          curl -i -X GET "${{ secrets.VITE_SUPABASE_URL }}/rest/v1/company?limit=1" \
+          -H "apikey: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY }}" \
+          -H "Authorization: Bearer ${{ secrets.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY }}"
