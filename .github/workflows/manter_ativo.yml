@@ -11,6 +11,7 @@ jobs:
     steps:
       - name: Enviar requisição para o Supabase
         run: |
-          curl -i -X GET "${{ secrets.VITE_SUPABASE_URL }}/rest/v1/company?limit=1" \
+          curl -i -X POST "${{ secrets.VITE_SUPABASE_URL }}/rest/v1/rpc/keep_alive_safe_ping" \
           -H "apikey: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY }}" \
-          -H "Authorization: Bearer ${{ secrets.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY }}"
+          -H "Authorization: Bearer ${{ secrets.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY }}" \
+          -H "Content-Type: application/json"
