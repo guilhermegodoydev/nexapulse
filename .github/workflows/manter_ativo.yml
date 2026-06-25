@@ -9,9 +9,11 @@ jobs:
   ping_api:
     runs-on: ubuntu-latest
     steps:
-      - name: Enviar requisição para o Supabase
+      - name: Inserir registro de atividade no Supabase
         run: |
-          curl -i -X POST "${{ secrets.VITE_SUPABASE_URL }}/rest/v1/rpc/keep_alive_safe_ping" \
+          curl -i -X POST "${{ secrets.VITE_SUPABASE_URL }}/rest/v1/github_pings" \
           -H "apikey: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY }}" \
           -H "Authorization: Bearer ${{ secrets.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY }}" \
-          -H "Content-Type: application/json"
+          -H "Content-Type: application/json" \
+          -H "Prefer: return=minimal" \
+          --data '{}'
