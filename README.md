@@ -13,6 +13,15 @@ Para testar as funcionalidades de gerenciamento e as políticas de segurança (R
 
 ---
 
+## 📸 Screenshots
+
+<p align="center">
+  <img src="public/screenshots/2.png" width="45%" alt="Tela Inicial" />
+  <img src="public/screenshots/4.png" width="45%" alt="Tela Inicial com dark mode" />
+  <img src="public/screenshots/3.png" width="45%" alt="Fórmulário de alteração" />
+  <img src="public/screenshots/1.png" width="45%" alt="Tela de Login" />
+</p>
+
 ## 🧠 Por que o Reboot? (V1 vs V2)
 A transição da V1 para a V2 foi motivada por três aprendizados fundamentais de engenharia e gestão de produto:
 
