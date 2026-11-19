@@ -4,7 +4,7 @@ CRM web multitenant com autenticação, gestão de empresas e isolamento de dado
 
 > **Versão 2.0**, reconstruída do zero a partir do [NexaFlow](https://github.com/guilhermegodoydev/crm-arquivado) (V1, arquivada).
 
-[🔗 Acesse o Nexapulse](https://nexapulse.netlify.app/)
+[Acesse o Nexapulse](https://nexapulse.netlify.app/)
 
 ## Conta de demonstração
 
@@ -59,4 +59,6 @@ Organização em camadas para separar responsabilidades:
 - **Gestão de empresas (CRUD):** fluxo completo com validações.
 - **Busca otimizada:** filtros com debounce para reduzir requisições.
 - **Segurança multitenant:** cada usuário só acessa os dados da própria organização, garantido por RLS.
+- **Configurações:** página de configurações com alternância de tema.
 - **UX:** skeletons e splash screen durante o carregamento.
+- **Entrega:** pipeline de CI/CD com versionamento e releases semânticos automatizados.
