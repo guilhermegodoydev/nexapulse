@@ -1,19 +1,19 @@
-# 📑 Nexapulse: Versão 2.0 (Antigo [NexaFlow](https://github.com/guilhermegodoydev/crm-arquivado)) — Totalmente reconstruído
+# Nexapulse
 
-Este sistema de CRM é o resultado de uma refatoração estratégica de uma versão anterior (V1). O projeto foi reconstruído do zero para solucionar gargalos de arquitetura, inconsistência de dados e falta de foco no MVP que atrasavam o desenvolvimento original.
+CRM web multitenant com autenticação, gestão de empresas e isolamento de dados por organização via Row Level Security.
 
-[🔗 Acesse o Nexapulse Aqui](https://nexapulse.netlify.app/)
+> **Versão 2.0**, reconstruída do zero a partir do [NexaFlow](https://github.com/guilhermegodoydev/crm-arquivado) (V1, arquivada).
 
----
+[🔗 Acesse o Nexapulse](https://nexapulse.netlify.app/)
 
-## 🔐 Credenciais de Demonstração
-Para testar as funcionalidades de gerenciamento e as políticas de segurança (RLS):
-- **E-mail**: ``fabio@nexus.com``
-- **Senha**: ``fgomes123``
+## Conta de demonstração
 
----
+Para testar o gerenciamento e as políticas de segurança (RLS):
 
-## 📸 Screenshots
+- **E-mail:** `fabio@nexus.com`
+- **Senha:** `fgomes123`
+
+## Screenshots
 
 <p align="center">
   <img src="public/screenshots/2.png" width="45%" alt="Tela Inicial" />
@@ -22,46 +22,41 @@ Para testar as funcionalidades de gerenciamento e as políticas de segurança (R
   <img src="public/screenshots/1.png" width="45%" alt="Tela de Login" />
 </p>
 
-## 🧠 Por que o Reboot? (V1 vs V2)
-A transição da V1 para a V2 foi motivada por três aprendizados fundamentais de engenharia e gestão de produto:
+## Por que reconstruir? (V1 vs V2)
 
-1 - **Arquitetura e Manutenibilidade:** Na V1, a estrutura de pastas clássica gerava acoplamento excessivo e dependências circulares, tornando o debug lento e complexo.
-  - **Solução na V2:** Implementação do **Feature-Sliced Design (FSD)**, garantindo que cada funcionalidade seja independente, fácil de localizar e escalar sem efeitos colaterais.
+A V1 funcionava, mas travava o desenvolvimento. Reconstruí do zero por três motivos:
 
-2 - **Consistência de Estado vs. Persistência Manual:** A V1 utilizava um simulador de servidor no localStorage, o que gerava bugs de sincronização e estados inconsistentes.
-  - **Solução na V2:** Migração para **Supabase (BaaS)** e **TanStack Query (React Query)**. Delegar o gerenciamento de cache, estados de erro e persistência para ferramentas robustas eliminou falhas manuais e aumentou a produtividade drasticamente.
+| Problema | Na V1 | Na V2 |
+|---|---|---|
+| **Arquitetura** | Estrutura de pastas clássica, com acoplamento excessivo e dependências circulares. Debugar era lento. | **Feature-Sliced Design:** cada funcionalidade é independente, fácil de achar e de evoluir sem efeito colateral. |
+| **Estado e persistência** | Simulador de servidor no `localStorage`, com bugs de sincronização e estados inconsistentes. | **Supabase + TanStack Query:** cache, estados de erro e persistência ficam com ferramentas feitas para isso, sem código manual. |
+| **Escopo** | Features demais sem propósito claro, muitas incompletas. | **MVP definido:** cada feature tem um motivo de negócio, e o foco é entregar algo polido e pronto para produção. |
 
-3 - **Foco no MVP e Definição de Escopo:** A V1 sofria com o "inchaço" de funcionalidades sem propósito claro, resultando em muitas features incompletas.
-  - **Solução na V2:** Definição rigorosa de um **MVP funcional**. Cada feature na V2 foi planejada com um propósito claro de negócio, priorizando a entrega de um produto polido e pronto para produção em vez de um protótipo sobrecarregado.
+## Arquitetura: Feature-Sliced Design
 
----
+Organização em camadas para separar responsabilidades:
 
-## 🏗️ Arquitetura: Feature-Sliced Design (FSD)
-Organização modular para separar preocupações de forma clara:
+- **App:** configurações globais, providers e roteamento.
+- **Pages:** composição das telas.
+- **Widgets:** blocos que combinam várias funcionalidades.
+- **Entities:** lógica de negócio e schemas (User, Company).
+- **Shared:** UI reutilizável, hooks genéricos e instâncias de API.
 
-- **App**: Configurações globais, providers e roteamento.
-- **Pages**: Composição das telas do sistema.
-- **Widgets**: Blocos "inteligentes" que combinam múltiplas funcionalidades.
-- **Entities**: Lógica de negócio e schemas (User, Company).
-- **Shared**: UI reutilizável, hooks genéricos e instâncias de API.
+## Stack
 
----
+| Tecnologia | Papel no projeto |
+|---|---|
+| React + Vite | Interface e ambiente de desenvolvimento/build |
+| Supabase (PostgreSQL) | Persistência real e Row Level Security (segurança no nível do banco) |
+| TanStack Query | Cache e sincronização de estado servidor-cliente |
+| Zod | Validação de dados e tipos em runtime |
+| React Router | Navegação com loaders e `HydrateFallback` |
+| Tailwind CSS | Estilização responsiva |
 
-## 🛠️ Stack Tecnológica & Diferenciais
+## Funcionalidades
 
-- **React + Vite**: Performance e rapidez.
-- **Supabase (PostgreSQL)**: Persistência real e **Row Level Security (RLS)** para segurança no nível do banco.
-- **TanStack Query**: Cache inteligente e sincronização de estado servidor-cliente.
-- **Zod**: Validação de dados e integridade de tipos em runtime.
-- **React Router**: Navegação baseada em *Loaders e Hydrate Fallbacks*.
-- **Tailwind CSS**: Estilização responsiva e utilitária.
-
----
-
-## 🚀 Funcionalidades Atuais
-
-- **Autenticação Reativa**: Login seguro e proteção de rotas.
-- **Gestão de Empresas (CRUD)**: Fluxo completo com validações rigorosas.
-- **Busca Otimizada**: Filtros debounced para economia de recursos.
-- **Segurança Multitenant**: Usuários só acessam dados da sua própria organização via RLS.
-- **UX Profissional**: Feedback visual com Skeletons e Splash Screens.
+- **Autenticação:** login e proteção de rotas.
+- **Gestão de empresas (CRUD):** fluxo completo com validações.
+- **Busca otimizada:** filtros com debounce para reduzir requisições.
+- **Segurança multitenant:** cada usuário só acessa os dados da própria organização, garantido por RLS.
+- **UX:** skeletons e splash screen durante o carregamento.
